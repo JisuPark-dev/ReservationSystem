@@ -27,9 +27,8 @@ public class Review {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToOne
-    @JoinColumn(name = "reservation_id")
-    private Reservation reservation;
+//    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL)
+//    private Reservation reservation;
 
     private String content;
     private LocalDateTime createdAt;

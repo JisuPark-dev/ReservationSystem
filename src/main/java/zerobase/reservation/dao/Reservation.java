@@ -28,7 +28,8 @@ public class Reservation {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToOne(mappedBy = "reservation", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "review_id")
     private Review review;
 
     @Enumerated(EnumType.STRING)
