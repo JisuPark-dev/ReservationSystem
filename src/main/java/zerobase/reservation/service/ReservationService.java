@@ -2,6 +2,7 @@ package zerobase.reservation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.dao.Reservation;
 import zerobase.reservation.dao.Review;
@@ -12,6 +13,7 @@ import zerobase.reservation.repository.ReservationRepository;
 import zerobase.reservation.repository.ReviewRepository;
 import zerobase.reservation.repository.StoreRepository;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -19,6 +21,7 @@ import static zerobase.reservation.dto.ReservationDto.toReservationEntity;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final MemberRepository memberRepository;
@@ -31,5 +34,15 @@ public class ReservationService {
         Review review = null;
 
         return reservationRepository.save(toReservationEntity(member, store, review, reservationDto));
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reservation> findAllByMemberId(Long memberId) {
+        return reservationRepository.findAllByMemberId(memberId);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Reservation> findAllByStoreId(Long StoreId) {
+        return reservationRepository.findAllByStoreId(StoreId);
     }
 }

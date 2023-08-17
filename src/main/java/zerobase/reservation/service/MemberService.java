@@ -2,6 +2,7 @@ package zerobase.reservation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.dto.MemberDto;
 import zerobase.reservation.repository.MemberRepository;
@@ -10,6 +11,7 @@ import static zerobase.reservation.dto.MemberDto.toMemberEntity;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
     private final MemberRepository memberRepository;
 
