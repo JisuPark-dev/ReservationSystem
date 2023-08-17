@@ -17,6 +17,7 @@ public class StoreDto {
     private String name;
     private String location;
     private String description;
+    private LocalDateTime updatedAt;
     
     public static Store toStoreEntity(Member member, StoreDto storeDto) {
 
