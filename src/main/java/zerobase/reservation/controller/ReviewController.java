@@ -5,7 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.dao.Reservation;
 import zerobase.reservation.dao.Review;
+import zerobase.reservation.dao.Store;
 import zerobase.reservation.dto.ReviewDto;
+import zerobase.reservation.dto.StoreDto;
 import zerobase.reservation.service.ReviewService;
 
 import java.util.List;
@@ -37,5 +39,21 @@ public class ReviewController {
     ) {
         List<Review> reviewsByMemberId = reviewService.findAllByStoreId(id);
         return ResponseEntity.ok(reviewsByMemberId);
+    }
+
+    @PutMapping("/review/{reviewId}")
+    public ResponseEntity<Review> update(
+            @RequestBody ReviewDto reviewDto,
+            @PathVariable("reviewId") Long id
+    ) {
+        Review review = reviewService.updateStore(reviewDto, id);
+        return ResponseEntity.ok(review);
+    }
+
+    @DeleteMapping("/review/{reviewId}")
+    public void delete(
+            @PathVariable("reviewId") Long id
+    ) {
+        reviewService.deleteStore(id);
     }
 }

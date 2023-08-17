@@ -13,6 +13,7 @@ import zerobase.reservation.repository.ReservationRepository;
 import zerobase.reservation.repository.ReviewRepository;
 import zerobase.reservation.repository.StoreRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -58,5 +59,20 @@ public class ReviewService {
     @Transactional(readOnly = true)
     public List<Review> findAllByStoreId(Long StoreId) {
         return reviewRepository.findAllByStoreId(StoreId);
+    }
+
+    public Review updateStore(ReviewDto reviewDto, Long id) {
+        Review review = reviewRepository.findById(id).get();
+
+        if (reviewDto.getContent() != null && !reviewDto.getContent().isEmpty()) {
+            review.setContent(reviewDto.getContent());
+        }
+
+        review.setUpdatedAt(LocalDateTime.now());
+        return reviewRepository.save(review);
+    }
+
+    public void deleteStore(Long id) {
+        reviewRepository.deleteById(id);
     }
 }
