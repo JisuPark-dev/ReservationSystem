@@ -1,7 +1,6 @@
 package zerobase.reservation.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.dao.Reservation;
 import zerobase.reservation.dao.Review;
@@ -11,13 +10,16 @@ import zerobase.reservation.type.ReservationStatus;
 import java.time.LocalDateTime;
 
 @Getter @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ReservationDto {
     private Long memberId;
     private Long storeId;
-    private Long reviewId;
-    private ReservationStatus reservationStatus;
+    private Long reservationId;
     private LocalDateTime time;
-    private LocalDateTime updatedAt;
+    private ReservationStatus reservationStatus;
+
 
     public static Reservation toReservationEntity(
             Member member,

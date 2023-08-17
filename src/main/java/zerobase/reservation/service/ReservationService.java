@@ -10,13 +10,10 @@ import zerobase.reservation.dao.Store;
 import zerobase.reservation.dto.ReservationDto;
 import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.ReservationRepository;
-import zerobase.reservation.repository.ReviewRepository;
 import zerobase.reservation.repository.StoreRepository;
-import zerobase.reservation.type.ReservationStatus;
 
 import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static zerobase.reservation.dto.ReservationDto.toReservationEntity;
 import static zerobase.reservation.type.ReservationStatus.CANCELED;
@@ -29,42 +26,86 @@ public class ReservationService {
     private final ReservationRepository reservationRepository;
     private final MemberRepository memberRepository;
     private final StoreRepository storeRepository;
-    private final ReviewRepository reviewRepository;
+
     private static Review review;
-    public Reservation join(ReservationDto reservationDto) {
+    public ReservationDto join(ReservationDto reservationDto) {
         Member member = memberRepository.findById(reservationDto.getMemberId()).get();
         Store store = storeRepository.findById(reservationDto.getStoreId()).get();
         Review review = null;
 
-        return reservationRepository.save(toReservationEntity(member, store, review, reservationDto));
+        Reservation reservation = reservationRepository.save(toReservationEntity(member, store, review, reservationDto));
+        return new ReservationDto().builder()
+                .memberId(member.getId())
+                .storeId(store.getId())
+                .reservationId(reservation.getId())
+                .time(reservation.getTime())
+                .reservationStatus(reservation.getReservationStatus())
+                .build();
     }
 
     @Transactional(readOnly = true)
-    public List<Reservation> findAllByMemberId(Long memberId) {
-        return reservationRepository.findAllByMemberId(memberId);
+    public List<ReservationDto> findAllByMemberId(Long memberId) {
+        return reservationRepository.findAllByMemberId(memberId).stream()
+                .map(reservation -> new ReservationDto().builder()
+                        .memberId(memberId)
+                        .storeId(reservation.getStore().getId())
+                        .reservationId(reservation.getId())
+                        .time(reservation.getTime())
+                        .reservationStatus(reservation.getReservationStatus())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<Reservation> findAllByStoreId(Long StoreId) {
-        return reservationRepository.findAllByStoreId(StoreId);
+    public List<ReservationDto> findAllByStoreId(Long StoreId) {
+        return reservationRepository.findAllByStoreId(StoreId).stream()
+                .map(reservation -> new ReservationDto().builder()
+                        .memberId(reservation.getMember().getId())
+                        .storeId(StoreId)
+                        .reservationId(reservation.getId())
+                        .time(reservation.getTime())
+                        .reservationStatus(reservation.getReservationStatus())
+                        .build())
+                .collect(Collectors.toList());
     }
 
-    public Reservation confirmReservation(Long reservationId) {
+    public ReservationDto confirmReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId).get();
         reservation.setReservationStatus(CONFIRMED);
         //TODO : 예약시간 10분 안에 들어온 요청인지 확인 필요.
-        return reservation;
+        return new ReservationDto().builder()
+                        .memberId(reservation.getMember().getId())
+                        .storeId(reservation.getStore().getId())
+                        .reservationId(reservation.getId())
+                        .time(reservation.getTime())
+                        .reservationStatus(reservation.getReservationStatus())
+                        .build();
     }
 
-    public Reservation cancelReservation(Long reservationId) {
+    public ReservationDto cancelReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId).get();
         reservation.setReservationStatus(CANCELED);
         //TODO : 시간안에 확정 못할시에도 취소되도록 해야함.
-        return reservation;
+        return new ReservationDto().builder()
+                .memberId(reservation.getMember().getId())
+                .storeId(reservation.getStore().getId())
+                .reservationId(reservation.getId())
+                .time(reservation.getTime())
+                .reservationStatus(reservation.getReservationStatus())
+                .build();
     }
 
     @Transactional(readOnly = true)
-    public List<Reservation> findAllConfirmedReservationWithoutReview(Long memberId) {
-        return reservationRepository.findByMemberIdAndReservationStatusAndReviewIsNull(memberId, CONFIRMED);
+    public List<ReservationDto> findAllConfirmedReservationWithoutReview(Long memberId) {
+        return reservationRepository
+                .findByMemberIdAndReservationStatusAndReviewIsNull(memberId, CONFIRMED)
+                .stream().map(reservation -> new ReservationDto().builder()
+                        .memberId(reservation.getMember().getId())
+                        .storeId(reservation.getStore().getId())
+                        .reservationId(reservation.getId())
+                        .time(reservation.getTime())
+                        .reservationStatus(reservation.getReservationStatus())
+                        .build())
+                .collect(Collectors.toList());
     }
 }
