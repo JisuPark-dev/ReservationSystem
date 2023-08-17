@@ -21,4 +21,6 @@ public class ReservationController {
         Reservation reservation = reservationService.join(reservationDto);
         return ResponseEntity.ok(reservation);
     }
+
+
 }

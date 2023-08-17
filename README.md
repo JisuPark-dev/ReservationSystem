@@ -12,35 +12,34 @@
 
 ## ✅ 매장 관련 API
 ### 1) 매장 등록
-- 파라미터 : storeDto
-  - 입력 예시
-    ~~~
+파라미터 : storeDto
+  ~~~
+  {
+    "memberId" : 2,
+    "name" : "testStore",
+    "location" : "seoul",
+    "description" : "test description"
+  }
+  ~~~
+결과
+- 성공
+    ~~~ 
     {
-      "memberId" : 2,
-      "name" : "testStore",
-      "location" : "seoul",
-      "description" : "test description"
+      "id": 13,
+      "member": {
+        "id": 12,
+        "username": "mockMember",
+        "password": "mockPassword",
+        "memberStatus": "PARTNER"
+      },
+      "name": "testStore3",
+      "location": "seoul",
+      "description": "test description2",
+      "createdAt": "2023-08-17T14:28:38.676748",
+      "updatedAt": null
     }
     ~~~
-- 결과
-  - 성공
-    - 반환결과
-      ~~~ 
-      {
-        "id": 13,
-        "member": {
-          "id": 12,
-          "username": "mockMember",
-          "password": "mockPassword",
-          "memberStatus": "PARTNER"
-        },
-        "name": "testStore3",
-        "location": "seoul",
-        "description": "test description2",
-        "createdAt": "2023-08-17T14:28:38.676748",
-        "updatedAt": null
-      }
-      ~~~
+- 실패
 ### 2) 매장 리스트 조회
 - 결과
   - 매장 리스트 확인 가능
