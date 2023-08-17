@@ -35,13 +35,8 @@ public class StoreService {
     }
 
     public Store updateStore(StoreDto storeDto, Long id) {
-        Optional<Store> storeOptional = storeRepository.findById(id);
+        Store store = storeRepository.findById(id).get();
 
-        if (!storeOptional.isPresent()) {
-            throw new RuntimeException("Store not found with id: " + id);
-        }
-
-        Store store = storeOptional.get();
         if (storeDto.getName() != null && !storeDto.getName().isEmpty()) {
             store.setName(storeDto.getName());
         }

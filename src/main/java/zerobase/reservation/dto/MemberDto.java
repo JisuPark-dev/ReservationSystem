@@ -6,9 +6,7 @@ import org.springframework.stereotype.Component;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.type.MemberStatus;
 
-@Getter
-@Setter
-@Component
+@Getter @Setter
 public class MemberDto {
     private String username;
     private String password;

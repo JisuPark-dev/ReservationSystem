@@ -8,9 +8,7 @@ import zerobase.reservation.dao.Store;
 
 import java.time.LocalDateTime;
 
-@Getter
-@Setter
-@RequiredArgsConstructor
+@Getter @Setter
 public class StoreDto {
     private Long memberId;
     private Member member;

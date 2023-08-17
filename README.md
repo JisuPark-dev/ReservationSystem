@@ -14,29 +14,33 @@
 ### 1) 매장 등록
 - 파라미터 : storeDto
   - 입력 예시
-      > {
-    "memberId" : 2,
-    "name" : "testStore",
-    "location" : "seoul",
-    "description" : "test description"
+    ~~~
+    {
+      "memberId" : 2,
+      "name" : "testStore",
+      "location" : "seoul",
+      "description" : "test description"
     }
+    ~~~
 - 결과
   - 성공
     - 반환결과
-    - >{
-      "id": 13,
-      "member": {
-      "id": 12,
-      "username": "mockMember",
-      "password": "mockPassword",
-      "memberStatus": "PARTNER"
-      },
-      "name": "testStore3",
-      "location": "seoul",
-      "description": "test description2",
-      "createdAt": "2023-08-17T14:28:38.676748",
-      "updatedAt": null
+      ~~~ 
+      {
+        "id": 13,
+        "member": {
+          "id": 12,
+          "username": "mockMember",
+          "password": "mockPassword",
+          "memberStatus": "PARTNER"
+        },
+        "name": "testStore3",
+        "location": "seoul",
+        "description": "test description2",
+        "createdAt": "2023-08-17T14:28:38.676748",
+        "updatedAt": null
       }
+      ~~~
 ### 2) 매장 리스트 조회
 - 결과
   - 매장 리스트 확인 가능
@@ -57,6 +61,47 @@
 
 ## ✅ 예약 관련 API
 ### 1) 예약 생성
+파라미터 
+~~~
+{
+  "memberId" : 2,
+  "storeId" : 15,
+  "reservationStatus" : "REQUESTED",
+  "time" : "2023-08-18T14:30:00"
+}
+~~~
+
+결과
+~~~
+{
+  "id": 18,
+  "member": {
+    "id": 2,
+    "username": "jisu",
+    "password": "dodlal123",
+    "memberStatus": "CLIENT"
+  },
+  "store": {
+    "id": 15,
+    "member": {
+    "id": 2,
+    "username": "jisu",
+    "password": "dodlal123",
+    "memberStatus": "CLIENT"
+    },
+    "name": "testStore4",
+    "location": "seoul",
+    "description": "test description2",
+    "createdAt": "2023-08-17T14:55:54.646998",
+    "updatedAt": null
+  },
+  "review": null,
+  "reservationStatus": "REQUESTED",
+  "time": "2023-08-18T14:30:00",
+  "createdAt": "2023-08-17T15:48:52.295923",
+  "updatedAt": null
+}
+~~~
 ### 2) 사용자별 예약 목록 조회
 ### 3) 상점별 예약 목록 조회
 ### 4) 예약 확정
