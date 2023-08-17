@@ -9,68 +9,134 @@
 
 ## ✅ 사용자 관련 API
 ### 1) 사용자 생성
+<details>
+<summary>요청경로 / 파라미터 / 결과</summary>
+요쳥경로 : [POST] http://localhost:8080/member
+
+파라미터
+
+~~~
+{
+    "username" : "jiho",
+    "password" : "dodlal1234",
+    "memberStatus" : "PARTNER"
+}
+~~~
+
+결과
+~~~
+{
+    "id": 33,
+    "username": "jisu",
+    "password": "dodlal1234",
+    "memberStatus": "PARTNER"
+}
+~~~
+</details>
+
 
 ## ✅ 매장 관련 API
 ### 1) 매장등록
 <details>
-<summary> 파라미터 / 결과</summary>
+<summary>요청경로 / 파라미터 / 결과</summary>
+요쳥경로 : [POST] http://localhost:8080/store
 
-파라미터 : storeDto
-  ~~~
-  {
+파라미터
+~~~
+{
     "memberId" : 2,
-    "name" : "testStore",
+    "name" : "testStore5",
     "location" : "seoul",
-    "description" : "test description"
-  }
-  ~~~
+    "description" : "test description2"
+}
+~~~
 결과
-- 성공
-    ~~~ 
-    {
-      "id": 13,
-      "member": {
-        "id": 12,
-        "username": "mockMember",
-        "password": "mockPassword",
-        "memberStatus": "PARTNER"
-      },
-      "name": "testStore3",
-      "location": "seoul",
-      "description": "test description2",
-      "createdAt": "2023-08-17T14:28:38.676748",
-      "updatedAt": null
-    }
-    ~~~
-- 실패
+
+~~~ 
+{
+    "storeId": 39,
+    "memberId": 2,
+    "name": "testStore5",
+    "location": "seoul",
+    "description": "test description2"
+}
+~~~
+
 </details>
 
 
 ### 2) 매장 리스트 조회
 <details>
-<summary>파라미터 / 결과</summary>
+<summary>요쳥경로 / 결과</summary>
+요쳥경로 : [GET] http://localhost:8080/store
 
 결과
-- 매장 리스트 확인 가능
+~~~
+[
+    {
+        "storeId": 7,
+        "memberId": 6,
+        "name": "update Test2 Name2",
+        "location": "seoul",
+        "description": "test description"
+    },
+    {
+        "storeId": 11,
+        "memberId": 10,
+        "name": "testStore2",
+        "location": "seoul",
+        "description": "test description2"
+    },
+    ...
+]
+~~~
+
 </details>
 
 
 ### 3) 매장 상세정보 조회
 <details>
-<summary>파라미터 / 결과</summary>
+<summary>요쳥경로 / 결과</summary>
+요쳥경로 : [GET] http://localhost:8080/store/15
 
-파라미터 : storeId
 결과
-- 매장 상세 정보 표시
+~~~
+{
+    "storeId": 15,
+    "memberId": 2,
+    "name": "testStore4",
+    "location": "seoul",
+    "description": "test description2"
+}
+~~~
+
 </details>
 
 ### 4) 매장 정보 수정
 <details>
 <summary>파라미터 / 결과</summary>
+요청경로 : [PUT] http://localhost:8080/store/13
 
-파라미터 : storeId, storeDto
+파라미터 
+~~~
+{
+    "name" : "update Test Name",
+    "location" : "update Test location",
+    "description" : "update test store"
+}
+~~~
+
 결과
-- 입력값이 있는 데이터에 대해서만 수정 진행
+~~~
+{
+    "storeId": 13,
+    "memberId": 12,
+    "name": "update Test Name",
+    "location": "update Test location",
+    "description": "update test store"
+}
+~~~
+
 </details>
 
 

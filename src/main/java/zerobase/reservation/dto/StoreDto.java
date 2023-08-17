@@ -1,20 +1,21 @@
 package zerobase.reservation.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.dao.Store;
 
 import java.time.LocalDateTime;
 
 @Getter @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class StoreDto {
+    private Long storeId;
     private Long memberId;
     private String name;
     private String location;
     private String description;
-    private LocalDateTime updatedAt;
     
     public static Store toStoreEntity(Member member, StoreDto storeDto) {
 

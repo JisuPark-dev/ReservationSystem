@@ -8,12 +8,11 @@ import zerobase.reservation.dao.Store;
 import zerobase.reservation.dto.StoreDto;
 import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.StoreRepository;
-import zerobase.reservation.type.MemberStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static zerobase.reservation.dto.StoreDto.toStoreEntity;
 
@@ -25,38 +24,61 @@ public class StoreService {
     private final StoreRepository storeRepository;
     private final MemberRepository memberRepository;
 
-    public Store join(StoreDto storeDto) {
+    public StoreDto join(StoreDto storeDto) {
         Member member = memberRepository.findById(storeDto.getMemberId())
                 .orElseThrow(() -> new NoSuchElementException("Member not found with id: " + storeDto.getMemberId()));
 
-        return storeRepository.save(toStoreEntity(member, storeDto));
+        Store savedStore = storeRepository.save(toStoreEntity(member, storeDto));
+        return new StoreDto().builder()
+                .storeId(savedStore.getId())
+                .memberId(savedStore.getMember().getId())
+                .name(savedStore.getName())
+                .location(savedStore.getLocation())
+                .description(savedStore.getDescription())
+                .build();
     }
 
     @Transactional(readOnly = true)
-    public Store findById(Long id) {
-        return storeRepository.findById(id)
+    public StoreDto findById(Long id) {
+        Store store = storeRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No Store found with id: " + id));
+        return new StoreDto().builder()
+                .storeId(store.getId())
+                .memberId(store.getMember().getId())
+                .name(store.getName())
+                .location(store.getLocation())
+                .description(store.getDescription())
+                .build();
     }
 
     @Transactional(readOnly = true)
-    public List<Store> findAll() {
-        return storeRepository.findAll();
+    public List<StoreDto> findAll() {
+        return storeRepository.findAll().stream().map(store ->
+                new StoreDto().builder()
+                        .storeId(store.getId())
+                        .memberId(store.getMember().getId())
+                        .name(store.getName())
+                        .location(store.getLocation())
+                        .description(store.getDescription())
+                        .build())
+                .collect(Collectors.toList());
     }
 
-    public Store updateStore(StoreDto storeDto, Long id) {
+    public StoreDto updateStore(StoreDto storeDto, Long id) {
         Store store = storeRepository.findById(id).get();
 
-        if (storeDto.getName() != null && !storeDto.getName().isEmpty()) {
-            store.setName(storeDto.getName());
-        }
-        if (storeDto.getLocation() != null && !storeDto.getLocation().isEmpty()) {
-            store.setLocation(storeDto.getLocation());
-        }
-        if (storeDto.getDescription() != null && !storeDto.getDescription().isEmpty()) {
-            store.setDescription(storeDto.getDescription());
-        }
+        store.setName(storeDto.getName());
+        store.setLocation(storeDto.getLocation());
+        store.setDescription(storeDto.getDescription());
         store.setUpdatedAt(LocalDateTime.now());
-        return storeRepository.save(store);
+
+        return new StoreDto().builder()
+                .storeId(store.getId())
+                .memberId(store.getMember().getId())
+                .name(store.getName())
+                .location(store.getLocation())
+                .description(store.getDescription())
+                .build();
     }
 
     public void deleteStore(Long id) {

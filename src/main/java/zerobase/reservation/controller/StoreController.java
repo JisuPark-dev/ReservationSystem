@@ -3,15 +3,12 @@ package zerobase.reservation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zerobase.reservation.dao.Store;
-import zerobase.reservation.dto.MemberDto;
 import zerobase.reservation.dto.StoreDto;
 import zerobase.reservation.repository.StoreRepository;
 import zerobase.reservation.service.StoreService;
 
 import javax.transaction.Transactional;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequiredArgsConstructor
@@ -21,34 +18,33 @@ public class StoreController {
     private final StoreRepository storeRepository;
 
     @PostMapping("/store")
-    public ResponseEntity<Store> create(
+    public ResponseEntity<StoreDto> create(
             @RequestBody StoreDto storeDto
             ) {
-        Store store = storeService.join(storeDto);
-        return ResponseEntity.ok(store);
+        storeDto = storeService.join(storeDto);
+        return ResponseEntity.ok(storeDto);
     }
 
     @GetMapping("/store")
-    public ResponseEntity<List<Store>> findAll() {
-        List<Store> stores = storeService.findAll();
-//        List<Store> stores = storeRepository.findAll();
-        return ResponseEntity.ok(stores);
+    public ResponseEntity<List<StoreDto>> findAll() {
+        List<StoreDto> storeDtos = storeService.findAll();
+        return ResponseEntity.ok(storeDtos);
     }
 
     @GetMapping("/store/{storeId}")
-    public ResponseEntity<Store> findById(@PathVariable("storeId") Long id) {
-        Store store = storeService.findById(id);
-        return ResponseEntity.ok(store);
+    public ResponseEntity<StoreDto> findById(@PathVariable("storeId") Long id) {
+        StoreDto storeDto = storeService.findById(id);
+        return ResponseEntity.ok(storeDto);
 
     }
 
     @PutMapping("/store/{storeId}")
-    public ResponseEntity<Store> update(
+    public ResponseEntity<StoreDto> update(
             @RequestBody StoreDto storeDto,
             @PathVariable("storeId") Long id
     ) {
-        Store store = storeService.updateStore(storeDto, id);
-        return ResponseEntity.ok(store);
+        storeDto = storeService.updateStore(storeDto, id);
+        return ResponseEntity.ok(storeDto);
     }
 
     @DeleteMapping("/store/{storeId}")
