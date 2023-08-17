@@ -25,7 +25,7 @@ public class ReservationController {
     }
 
 
-    @GetMapping("/reservation/member/{memberId}")
+    @GetMapping("/reservations/member/{memberId}")
     public ResponseEntity<List<Reservation>> findAllByMemberId(
             @PathVariable("memberId") Long id
     ) {
@@ -33,12 +33,19 @@ public class ReservationController {
         return ResponseEntity.ok(reservationsByMemberId);
     }
 
-    @GetMapping("/reservation/store/{storeId}")
+    @GetMapping("/reservations/store/{storeId}")
     public ResponseEntity<List<Reservation>> findAllByStoreId(
             @PathVariable("storeId") Long id
     ) {
         List<Reservation> reservationsByStoreId = reservationService.findAllByStoreId(id);
         return ResponseEntity.ok(reservationsByStoreId);
+    }
+    @GetMapping("reservations/without_review/member/{memberId}")
+    public ResponseEntity<List<Reservation>> findAllConfirmedReservationWithoutReview(
+            @PathVariable("memberId") Long id
+    ) {
+        List<Reservation> reservationsWithoutReview = reservationService.findAllConfirmedReservationWithoutReview(id);
+        return ResponseEntity.ok(reservationsWithoutReview);
     }
 
     @PutMapping("/reservation/confirm")

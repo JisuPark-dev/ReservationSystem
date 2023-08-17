@@ -52,12 +52,18 @@ public class ReservationService {
     public Reservation confirmReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId).get();
         reservation.setReservationStatus(CONFIRMED);
+        //TODO : 예약시간 10분 안에 들어온 요청인지 확인 필요.
         return reservation;
     }
 
     public Reservation cancelReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId).get();
         reservation.setReservationStatus(CANCELED);
+        //TODO : 시간안에 확정 못할시에도 취소되도록 해야함.
         return reservation;
+    }
+
+    public List<Reservation> findAllConfirmedReservationWithoutReview(Long memberId) {
+        return reservationRepository.findByMemberIdAndReservationStatusAndReviewIsNull(memberId, CONFIRMED);
     }
 }

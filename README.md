@@ -135,7 +135,7 @@
 <details>
 <summary>파라미터 / 결과</summary>
 
-파라미터 : http://localhost:8080/reservation/member/19
+파라미터 : http://localhost:8080/reservations/member/19
 
 결과
 ~~~
@@ -186,7 +186,7 @@
 <details>
 <summary>파라미터 / 결과</summary>
 
-파라미터 : http://localhost:8080/reservation/store/15
+파라미터 : http://localhost:8080/reservations/store/15
 
 결과 
 ~~~
@@ -308,10 +308,59 @@
 
 </details>
 
+### 6) 확정되었지만, 리뷰가 작성되지 않은 예약 조회
+<details>
+<summary>파라미터 / 결과</summary>
+
+파라미터 : storeId, storeDto
+결과
+- 입력값이 있는 데이터에 대해서만 수정 진행
+</details>
+
 ## ✅ 리뷰 관련 API
-### 1) 사용자별 미작성 리뷰 조회
+
 ### 2) 사용자별 작성된 리뷰 조회
+<details>
+<summary>파라미터 / 결과</summary>
+
+파라미터 : storeId, storeDto
+결과
+- 입력값이 있는 데이터에 대해서만 수정 진행
+</details>
+
 ### 3) 매장별 작성된 리뷰 조회
+<details>
+<summary>파라미터 / 결과</summary>
+
+파라미터 : storeId, storeDto
+결과
+- 입력값이 있는 데이터에 대해서만 수정 진행
+</details>
+
 ### 4) 리뷰 등록
+<details>
+<summary>파라미터 / 결과</summary>
+
+파라미터 : storeId, storeDto
+결과
+- 입력값이 있는 데이터에 대해서만 수정 진행
+</details>
+
 ### 5) 리뷰 수정
+<details>
+<summary>파라미터 / 결과</summary>
+
+파라미터 : storeId, storeDto
+결과
+- 입력값이 있는 데이터에 대해서만 수정 진행
+</details>
+
 ### 6) 리뷰 삭제
+<details>
+<summary>파라미터 / 결과</summary>
+
+파라미터 : storeId, storeDto
+결과
+- 입력값이 있는 데이터에 대해서만 수정 진행
+</details>
+
