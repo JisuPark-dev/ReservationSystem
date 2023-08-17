@@ -312,9 +312,43 @@
 <details>
 <summary>파라미터 / 결과</summary>
 
-파라미터 : storeId, storeDto
+파라미터 : http://localhost:8080/reservations/without_review/member/19
+
 결과
-- 입력값이 있는 데이터에 대해서만 수정 진행
+~~~
+[
+    {
+        "id": 21,
+        "member": {
+            "id": 19,
+            "username": "jiho",
+            "password": "dodlal1234",
+            "memberStatus": "PARTNER"
+        },
+        "store": {
+            "id": 15,
+            "member": {
+                "id": 2,
+                "username": "jisu",
+                "password": "dodlal123",
+                "memberStatus": "CLIENT"
+            },
+            "name": "testStore4",
+            "location": "seoul",
+            "description": "test description2",
+            "createdAt": "2023-08-17T14:55:54.646998",
+            "updatedAt": null
+        },
+        "review": null,
+        "reservationStatus": "CONFIRMED",
+        "time": "2023-08-18T14:30:00",
+        "createdAt": "2023-08-17T16:22:18.306983",
+        "updatedAt": null
+    },
+    ...
+]
+~~~
+
 </details>
 
 ## ✅ 리뷰 관련 API
