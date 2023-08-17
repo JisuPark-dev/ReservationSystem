@@ -1,9 +1,6 @@
 package zerobase.reservation.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import zerobase.reservation.type.ReservationStatus;
 
 import javax.persistence.*;
@@ -12,7 +9,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Getter @Setter
 @Builder
 public class Reservation {
     @Id

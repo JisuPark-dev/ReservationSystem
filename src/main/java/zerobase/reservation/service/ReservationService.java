@@ -12,12 +12,15 @@ import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.ReservationRepository;
 import zerobase.reservation.repository.ReviewRepository;
 import zerobase.reservation.repository.StoreRepository;
+import zerobase.reservation.type.ReservationStatus;
 
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static zerobase.reservation.dto.ReservationDto.toReservationEntity;
+import static zerobase.reservation.type.ReservationStatus.CANCELED;
+import static zerobase.reservation.type.ReservationStatus.CONFIRMED;
 
 @Service
 @RequiredArgsConstructor
@@ -44,5 +47,17 @@ public class ReservationService {
     @Transactional(readOnly = true)
     public List<Reservation> findAllByStoreId(Long StoreId) {
         return reservationRepository.findAllByStoreId(StoreId);
+    }
+
+    public Reservation confirmReservation(Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId).get();
+        reservation.setReservationStatus(CONFIRMED);
+        return reservation;
+    }
+
+    public Reservation cancelReservation(Long reservationId) {
+        Reservation reservation = reservationRepository.findById(reservationId).get();
+        reservation.setReservationStatus(CANCELED);
+        return reservation;
     }
 }

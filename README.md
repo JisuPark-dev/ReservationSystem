@@ -229,18 +229,83 @@
 <details>
 <summary>파라미터 / 결과</summary>
 
-파라미터 : storeId
+파라미터 : http://localhost:8080/reservation/cancel?reservationId=21
 
-결과 : 삭제기능 구현
+결과 
+~~~
+{
+    "id": 21,
+    "member": {
+        "id": 19,
+        "username": "jiho",
+        "password": "dodlal1234",
+        "memberStatus": "PARTNER"
+    },
+    "store": {
+        "id": 15,
+        "member": {
+            "id": 2,
+            "username": "jisu",
+            "password": "dodlal123",
+            "memberStatus": "CLIENT"
+        },
+        "name": "testStore4",
+        "location": "seoul",
+        "description": "test description2",
+        "createdAt": "2023-08-17T14:55:54.646998",
+        "updatedAt": null
+    },
+    "review": null,
+    "reservationStatus": "CONFIRMED",
+    "time": "2023-08-18T14:30:00",
+    "createdAt": "2023-08-17T16:22:18.306983",
+    "updatedAt": null
+}
+~~~
+"reservationStatus": "CONFIRMED"으로 변경됨.
+
 </details>
 
 ### 5) 예약 취소
 <details>
 <summary>파라미터 / 결과</summary>
 
-파라미터 : storeId
+파라미터 : http://localhost:8080/reservation/cancel?reservationId=21
 
-결과 : 삭제기능 구현
+결과 
+~~~
+{
+    "id": 21,
+    "member": {
+        "id": 19,
+        "username": "jiho",
+        "password": "dodlal1234",
+        "memberStatus": "PARTNER"
+    },
+    "store": {
+        "id": 15,
+        "member": {
+            "id": 2,
+            "username": "jisu",
+            "password": "dodlal123",
+            "memberStatus": "CLIENT"
+        },
+        "name": "testStore4",
+        "location": "seoul",
+        "description": "test description2",
+        "createdAt": "2023-08-17T14:55:54.646998",
+        "updatedAt": null
+    },
+    "review": null,
+    "reservationStatus": "CANCELED",
+    "time": "2023-08-18T14:30:00",
+    "createdAt": "2023-08-17T16:22:18.306983",
+    "updatedAt": null
+}
+~~~
+
+"reservationStatus": "CANCELED"으로 변경됨.
+
 </details>
 
 ## ✅ 리뷰 관련 API

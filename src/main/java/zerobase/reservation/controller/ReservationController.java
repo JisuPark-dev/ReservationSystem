@@ -41,5 +41,21 @@ public class ReservationController {
         return ResponseEntity.ok(reservationsByStoreId);
     }
 
+    @PutMapping("/reservation/confirm")
+    public ResponseEntity<Reservation> confirm(
+            @RequestParam Long reservationId
+    ) {
+        Reservation reservation = reservationService.confirmReservation(reservationId);
+        return ResponseEntity.ok(reservation);
+    }
+
+    @PutMapping("/reservation/cancel")
+    public ResponseEntity<Reservation> cancel(
+            @RequestParam Long reservationId
+    ) {
+        Reservation reservation = reservationService.cancelReservation(reservationId);
+        return ResponseEntity.ok(reservation);
+    }
+
 
 }
