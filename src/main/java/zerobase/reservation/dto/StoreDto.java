@@ -11,7 +11,6 @@ import java.time.LocalDateTime;
 @Getter @Setter
 public class StoreDto {
     private Long memberId;
-    private Member member;
     private String name;
     private String location;
     private String description;

@@ -1,5 +1,6 @@
 package zerobase.reservation.dao;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import zerobase.reservation.type.ReservationStatus;
 
@@ -27,6 +28,7 @@ public class Reservation {
 
     @OneToOne
     @JoinColumn(name = "review_id")
+    @JsonManagedReference
     private Review review;
 
     @Enumerated(EnumType.STRING)

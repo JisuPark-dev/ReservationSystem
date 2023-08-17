@@ -40,6 +40,7 @@ public class ReservationController {
         List<Reservation> reservationsByStoreId = reservationService.findAllByStoreId(id);
         return ResponseEntity.ok(reservationsByStoreId);
     }
+
     @GetMapping("reservations/without_review/member/{memberId}")
     public ResponseEntity<List<Reservation>> findAllConfirmedReservationWithoutReview(
             @PathVariable("memberId") Long id

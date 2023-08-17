@@ -32,11 +32,13 @@ public class StoreService {
         return storeRepository.save(toStoreEntity(member, storeDto));
     }
 
+    @Transactional(readOnly = true)
     public Store findById(Long id) {
         return storeRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No Store found with id: " + id));
     }
 
+    @Transactional(readOnly = true)
     public List<Store> findAll() {
         return storeRepository.findAll();
     }

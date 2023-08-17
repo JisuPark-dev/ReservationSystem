@@ -63,6 +63,7 @@ public class ReservationService {
         return reservation;
     }
 
+    @Transactional(readOnly = true)
     public List<Reservation> findAllConfirmedReservationWithoutReview(Long memberId) {
         return reservationRepository.findByMemberIdAndReservationStatusAndReviewIsNull(memberId, CONFIRMED);
     }

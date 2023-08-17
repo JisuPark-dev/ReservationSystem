@@ -1,5 +1,6 @@
 package zerobase.reservation.dao;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -27,8 +28,9 @@ public class Review {
     @JoinColumn(name = "store_id")
     private Store store;
 
-//    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL)
-//    private Reservation reservation;
+    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private Reservation reservation;
 
     private String content;
     private LocalDateTime createdAt;
