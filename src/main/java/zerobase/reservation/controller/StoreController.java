@@ -1,16 +1,15 @@
 package zerobase.reservation.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.dao.Store;
+import zerobase.reservation.dto.MemberDto;
 import zerobase.reservation.dto.StoreDto;
 import zerobase.reservation.repository.StoreRepository;
 import zerobase.reservation.service.StoreService;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,7 +22,8 @@ public class StoreController {
 
     @PostMapping("/store")
     public ResponseEntity<Store> create(
-            @RequestBody StoreDto storeDto) {
+            @RequestBody StoreDto storeDto
+            ) {
         Store store = storeService.join(storeDto);
         return ResponseEntity.ok(store);
     }

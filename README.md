@@ -15,10 +15,11 @@
 - 파라미터 : storeDto
   - 입력 예시
       > {
-          "name" : "testStore3",
-          "location" : "seoul",
-          "description" : "test description2"
-      }
+    "memberId" : 2,
+    "name" : "testStore",
+    "location" : "seoul",
+    "description" : "test description"
+    }
 - 결과
   - 성공
     - 반환결과

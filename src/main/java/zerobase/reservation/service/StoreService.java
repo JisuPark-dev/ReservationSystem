@@ -23,12 +23,14 @@ public class StoreService {
 
     public Store join(StoreDto storeDto) {
         //TODO : 지금은 member를 만들어서 넣고 있긴 한데, 그러면 안된다.
-        Member member = new Member().builder()
-                .username("mockMember")
-                .password("mockPassword")
-                .memberStatus(MemberStatus.PARTNER)
-                .build();
-        memberRepository.save(member);
+
+        Optional<Member> memberOptional = memberRepository.findById(storeDto.getMemberId());
+
+        if (!memberOptional.isPresent()) {
+            throw new RuntimeException("Member not found with id: " + storeDto.getMemberId());
+        }
+
+        Member member = memberOptional.get();
         return storeRepository.save(toStoreEntity(member, storeDto));
     }
 

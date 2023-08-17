@@ -4,7 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import zerobase.reservation.dao.Store;
 
 import javax.transaction.Transactional;
-import java.time.LocalDate;
 
 public interface StoreRepository extends JpaRepository<Store, Long> {
     @Transactional
