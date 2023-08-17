@@ -2,7 +2,7 @@ package zerobase.reservation.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import zerobase.reservation.domain.Test;
+import zerobase.reservation.dao.Test;
 import zerobase.reservation.repository.TestRepository;
 
 import java.util.List;

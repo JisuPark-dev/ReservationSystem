@@ -1,4 +1,4 @@
-package zerobase.reservation.domain;
+package zerobase.reservation.dao;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,10 +10,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 public class Test {
     @Id
     @GeneratedValue
