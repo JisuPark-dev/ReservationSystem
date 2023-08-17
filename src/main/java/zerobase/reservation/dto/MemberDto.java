@@ -2,7 +2,6 @@ package zerobase.reservation.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.stereotype.Component;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.type.MemberStatus;
 

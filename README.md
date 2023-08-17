@@ -301,45 +301,104 @@
 ## ✅ 리뷰 관련 API
 ### 1) 리뷰 등록
 <details>
-<summary>파라미터 / 결과</summary>
+<summary>요쳥경로 / 파라미터 / 결과</summary>
 
-파라미터 : storeId, storeDto
+요쳥경로 : [POST] http://localhost:8080/review
+
+파라미터 
+~~~
+{
+    "memberId" : 19,
+    "storeId" : 15,
+    "reservationId" : 51,
+    "content" : "review test5"
+}
+~~~
+
 결과
-- 입력값이 있는 데이터에 대해서만 수정 진행
+~~~
+{
+    "memberId": 48,
+    "storeId": 39,
+    "reservationId": 51,
+    "reviewId": 52,
+    "content": "review test!!@@"
+}
+~~~
 </details>
 
 ### 2) 사용자별 작성된 리뷰 조회
 <details>
-<summary>파라미터 / 결과</summary>
+<summary>요쳥경로 / 결과</summary>
 
-파라미터 : storeId, storeDto
+요쳥경로 : [GET] http://localhost:8080/reviews/member/48
+
 결과
-- 입력값이 있는 데이터에 대해서만 수정 진행
+~~~
+[
+    {
+        "memberId": 48,
+        "storeId": 39,
+        "reservationId": 51,
+        "reviewId": 52,
+        "content": "review test!!@@"
+    }
+]
+~~~
+
 </details>
 
 ### 3) 매장별 작성된 리뷰 조회
 <details>
-<summary>파라미터 / 결과</summary>
+<summary>요쳥경로 / 결과</summary>
 
-파라미터 : storeId, storeDto
+요쳥경로 : [GET] http://localhost:8080/reviews/store/39
+
 결과
-- 입력값이 있는 데이터에 대해서만 수정 진행
+~~~
+[
+    {
+        "memberId": 48,
+        "storeId": 39,
+        "reservationId": 51,
+        "reviewId": 52,
+        "content": "review test!!@@"
+    }
+]
+~~~
 </details>
 
 ### 4) 리뷰 수정
 <details>
-<summary>파라미터 / 결과</summary>
+<summary>요쳥경로 / 파라미터 / 결과</summary>
 
-파라미터 : storeId, storeDto
+요쳥경로 : [PUT] http://localhost:8080/review/52
+
+파라미터
+~~~
+{
+"content": "review content is updated!!"
+}
+~~~
+
 결과
-- 입력값이 있는 데이터에 대해서만 수정 진행
+~~~
+{
+    "memberId": 48,
+    "storeId": 39,
+    "reservationId": 51,
+    "reviewId": 52,
+    "content": "review content is updated!!"
+}
+~~~
 </details>
 
 ### 5) 리뷰 삭제
 <details>
-<summary>파라미터 / 결과</summary>
+<summary>요쳥경로 / 결과</summary>
 
-파라미터 : storeId, storeDto
+요쳥경로 : [DELETE] http://localhost:8080/review/50
+
 결과
 - 입력값이 있는 데이터에 대해서만 수정 진행
 </details>

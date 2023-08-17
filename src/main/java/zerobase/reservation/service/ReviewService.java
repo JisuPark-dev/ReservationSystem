@@ -12,12 +12,13 @@ import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.ReservationRepository;
 import zerobase.reservation.repository.ReviewRepository;
 import zerobase.reservation.repository.StoreRepository;
+import zerobase.reservation.type.ReservationStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
-import static zerobase.reservation.dto.MemberDto.toMemberEntity;
 import static zerobase.reservation.dto.ReviewDto.toReviewEntity;
 
 @Service
@@ -29,7 +30,7 @@ public class ReviewService {
     private final StoreRepository storeRepository;
     private final ReservationRepository reservationRepository;
 
-    public Review join(ReviewDto reviewDto) {
+    public ReviewDto join(ReviewDto reviewDto) {
         Member member = memberRepository.findById(reviewDto.getMemberId())
                 .orElseThrow(() -> new NoSuchElementException("No Member found with ID: " + reviewDto.getMemberId()));
 
@@ -43,25 +44,50 @@ public class ReviewService {
         if(reservation.getReview() != null) {
             throw new IllegalStateException("This reservation already has a review.");
         }
+        if(reservation.getReservationStatus()!= ReservationStatus.CONFIRMED){
+            throw new IllegalStateException("예약이 확정되고 나서 사용 가능합니다.");
+        }
 
         Review review = reviewRepository.save(toReviewEntity(member, store, reservation, reviewDto));
 
         reservation.setReview(review);
 
-        return review;
+        return new ReviewDto().builder()
+                .memberId(member.getId())
+                .storeId(store.getId())
+                .reservationId(reservation.getId())
+                .reviewId(review.getId())
+                .content(review.getContent())
+                .build();
     }
 
     @Transactional(readOnly = true)
-    public List<Review> findAllByMemberId(Long memberId) {
-        return reviewRepository.findAllByMemberId(memberId);
+    public List<ReviewDto> findAllByMemberId(Long memberId) {
+        return reviewRepository.findAllByMemberId(memberId)
+                .stream().map(review -> new ReviewDto().builder()
+                        .memberId(memberId)
+                        .storeId(review.getStore().getId())
+                        .reservationId(review.getReservation().getId())
+                        .reviewId(review.getId())
+                        .content(review.getContent())
+                        .build())
+                .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<Review> findAllByStoreId(Long StoreId) {
-        return reviewRepository.findAllByStoreId(StoreId);
+    public List<ReviewDto> findAllByStoreId(Long StoreId) {
+        return reviewRepository.findAllByStoreId(StoreId)
+                .stream().map(review -> new ReviewDto().builder()
+                        .memberId(review.getMember().getId())
+                        .storeId(StoreId)
+                        .reservationId(review.getReservation().getId())
+                        .reviewId(review.getId())
+                        .content(review.getContent())
+                        .build())
+                .collect(Collectors.toList());
     }
 
-    public Review updateStore(ReviewDto reviewDto, Long id) {
+    public ReviewDto updateStore(ReviewDto reviewDto, Long id) {
         Review review = reviewRepository.findById(id).get();
 
         if (reviewDto.getContent() != null && !reviewDto.getContent().isEmpty()) {
@@ -69,7 +95,13 @@ public class ReviewService {
         }
 
         review.setUpdatedAt(LocalDateTime.now());
-        return reviewRepository.save(review);
+        return new ReviewDto().builder()
+                .memberId(review.getMember().getId())
+                .storeId(review.getStore().getId())
+                .reservationId(review.getReservation().getId())
+                .reviewId(review.getId())
+                .content(review.getContent())
+                .build();
     }
 
     public void deleteStore(Long id) {
