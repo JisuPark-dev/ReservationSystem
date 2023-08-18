@@ -3,7 +3,6 @@ package zerobase.reservation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zerobase.reservation.dao.Review;
 import zerobase.reservation.dto.ReviewDto;
 import zerobase.reservation.service.ReviewService;
 

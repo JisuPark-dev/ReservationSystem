@@ -377,7 +377,7 @@
 파라미터
 ~~~
 {
-"content": "review content is updated!!"
+    "content": "review content is updated!!"
 }
 ~~~
 

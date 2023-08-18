@@ -17,6 +17,7 @@ import zerobase.reservation.type.ReservationStatus;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static zerobase.reservation.dto.ReviewDto.toReviewEntity;
@@ -52,38 +53,25 @@ public class ReviewService {
 
         reservation.setReview(review);
 
-        return new ReviewDto().builder()
-                .memberId(member.getId())
-                .storeId(store.getId())
-                .reservationId(reservation.getId())
-                .reviewId(review.getId())
-                .content(review.getContent())
-                .build();
+        return convertToDto(review);
     }
 
     @Transactional(readOnly = true)
     public List<ReviewDto> findAllByMemberId(Long memberId) {
-        return reviewRepository.findAllByMemberId(memberId)
-                .stream().map(review -> new ReviewDto().builder()
-                        .memberId(memberId)
-                        .storeId(review.getStore().getId())
-                        .reservationId(review.getReservation().getId())
-                        .reviewId(review.getId())
-                        .content(review.getContent())
-                        .build())
+        return reviewRepository.findAllByMemberIdAndContentIsNotNull(memberId)
+                .stream()
+                .filter(review -> review.getStore() != null && review.getReservation() != null)
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
+
     @Transactional(readOnly = true)
     public List<ReviewDto> findAllByStoreId(Long StoreId) {
-        return reviewRepository.findAllByStoreId(StoreId)
-                .stream().map(review -> new ReviewDto().builder()
-                        .memberId(review.getMember().getId())
-                        .storeId(StoreId)
-                        .reservationId(review.getReservation().getId())
-                        .reviewId(review.getId())
-                        .content(review.getContent())
-                        .build())
+        return reviewRepository.findAllByStoreIdAndContentIsNotNull(StoreId)
+                .stream()
+                .filter(review -> review.getStore() != null && review.getReservation() != null)
+                .map(this::convertToDto)
                 .collect(Collectors.toList());
     }
 
@@ -95,16 +83,34 @@ public class ReviewService {
         }
 
         review.setUpdatedAt(LocalDateTime.now());
-        return new ReviewDto().builder()
+        return convertToDto(review);
+    }
+
+    public void deleteStore(Long id) {
+        Optional<Review> reviewOpt = reviewRepository.findById(id);
+
+        if (reviewOpt.isPresent()) {
+            Review review = reviewOpt.get();
+
+            // 연관된 Reservation의 외래 키를 null로 설정
+            Reservation reservation = review.getReservation();
+            if (reservation != null) {
+                reservation.setReview(null);
+                reservationRepository.save(reservation);
+            }
+
+            // Review 삭제
+            reviewRepository.deleteById(id);
+        }
+    }
+
+    private ReviewDto convertToDto(Review review) {
+        return ReviewDto.builder()
                 .memberId(review.getMember().getId())
                 .storeId(review.getStore().getId())
                 .reservationId(review.getReservation().getId())
                 .reviewId(review.getId())
                 .content(review.getContent())
                 .build();
-    }
-
-    public void deleteStore(Long id) {
-        reviewRepository.deleteById(id);
     }
 }

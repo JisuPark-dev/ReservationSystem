@@ -25,7 +25,7 @@ public class Review {
     @JoinColumn(name = "store_id")
     private Store store;
 
-    @OneToOne(mappedBy = "review", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "review")
     @JsonBackReference
     private Reservation reservation;
 
