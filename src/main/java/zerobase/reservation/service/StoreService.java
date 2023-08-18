@@ -29,38 +29,20 @@ public class StoreService {
                 .orElseThrow(() -> new NoSuchElementException("Member not found with id: " + storeDto.getMemberId()));
 
         Store savedStore = storeRepository.save(toStoreEntity(member, storeDto));
-        return new StoreDto().builder()
-                .storeId(savedStore.getId())
-                .memberId(savedStore.getMember().getId())
-                .name(savedStore.getName())
-                .location(savedStore.getLocation())
-                .description(savedStore.getDescription())
-                .build();
+        return storeToDto(savedStore);
     }
 
     @Transactional(readOnly = true)
     public StoreDto findById(Long id) {
         Store store = storeRepository.findById(id)
                 .orElseThrow(() -> new NoSuchElementException("No Store found with id: " + id));
-        return new StoreDto().builder()
-                .storeId(store.getId())
-                .memberId(store.getMember().getId())
-                .name(store.getName())
-                .location(store.getLocation())
-                .description(store.getDescription())
-                .build();
+        return storeToDto(store);
     }
 
     @Transactional(readOnly = true)
     public List<StoreDto> findAll() {
         return storeRepository.findAll().stream().map(store ->
-                new StoreDto().builder()
-                        .storeId(store.getId())
-                        .memberId(store.getMember().getId())
-                        .name(store.getName())
-                        .location(store.getLocation())
-                        .description(store.getDescription())
-                        .build())
+                        storeToDto(store))
                 .collect(Collectors.toList());
     }
 
@@ -72,6 +54,14 @@ public class StoreService {
         store.setDescription(storeDto.getDescription());
         store.setUpdatedAt(LocalDateTime.now());
 
+        return storeToDto(store);
+    }
+
+    public void deleteStore(Long id) {
+        storeRepository.deleteById(id);
+    }
+
+    private StoreDto storeToDto(Store store) {
         return new StoreDto().builder()
                 .storeId(store.getId())
                 .memberId(store.getMember().getId())
@@ -79,9 +69,5 @@ public class StoreService {
                 .location(store.getLocation())
                 .description(store.getDescription())
                 .build();
-    }
-
-    public void deleteStore(Long id) {
-        storeRepository.deleteById(id);
     }
 }

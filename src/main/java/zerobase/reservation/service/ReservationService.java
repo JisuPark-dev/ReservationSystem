@@ -34,38 +34,22 @@ public class ReservationService {
         Review review = null;
 
         Reservation reservation = reservationRepository.save(toReservationEntity(member, store, review, reservationDto));
-        return new ReservationDto().builder()
-                .memberId(member.getId())
-                .storeId(store.getId())
-                .reservationId(reservation.getId())
-                .time(reservation.getTime())
-                .reservationStatus(reservation.getReservationStatus())
-                .build();
+        return reservationToDto(reservation);
     }
 
     @Transactional(readOnly = true)
     public List<ReservationDto> findAllByMemberId(Long memberId) {
-        return reservationRepository.findAllByMemberId(memberId).stream()
-                .map(reservation -> new ReservationDto().builder()
-                        .memberId(memberId)
-                        .storeId(reservation.getStore().getId())
-                        .reservationId(reservation.getId())
-                        .time(reservation.getTime())
-                        .reservationStatus(reservation.getReservationStatus())
-                        .build())
+        return reservationRepository.findAllByMemberId(memberId)
+                .stream()
+                .map(this::reservationToDto)
                 .collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
     public List<ReservationDto> findAllByStoreId(Long StoreId) {
-        return reservationRepository.findAllByStoreId(StoreId).stream()
-                .map(reservation -> new ReservationDto().builder()
-                        .memberId(reservation.getMember().getId())
-                        .storeId(StoreId)
-                        .reservationId(reservation.getId())
-                        .time(reservation.getTime())
-                        .reservationStatus(reservation.getReservationStatus())
-                        .build())
+        return reservationRepository.findAllByStoreId(StoreId)
+                .stream()
+                .map(this::reservationToDto)
                 .collect(Collectors.toList());
     }
 
@@ -73,19 +57,26 @@ public class ReservationService {
         Reservation reservation = reservationRepository.findById(reservationId).get();
         reservation.setReservationStatus(CONFIRMED);
         //TODO : 예약시간 10분 안에 들어온 요청인지 확인 필요.
-        return new ReservationDto().builder()
-                        .memberId(reservation.getMember().getId())
-                        .storeId(reservation.getStore().getId())
-                        .reservationId(reservation.getId())
-                        .time(reservation.getTime())
-                        .reservationStatus(reservation.getReservationStatus())
-                        .build();
+        return reservationToDto(reservation);
     }
 
     public ReservationDto cancelReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId).get();
         reservation.setReservationStatus(CANCELED);
         //TODO : 시간안에 확정 못할시에도 취소되도록 해야함.
+        return reservationToDto(reservation);
+    }
+
+    @Transactional(readOnly = true)
+    public List<ReservationDto> findAllConfirmedReservationWithoutReview(Long memberId) {
+        return reservationRepository
+                .findByMemberIdAndReservationStatusAndReviewIsNull(memberId, CONFIRMED)
+                .stream()
+                .map(this::reservationToDto)
+                .collect(Collectors.toList());
+    }
+
+    private ReservationDto reservationToDto(Reservation reservation) {
         return new ReservationDto().builder()
                 .memberId(reservation.getMember().getId())
                 .storeId(reservation.getStore().getId())
@@ -93,19 +84,5 @@ public class ReservationService {
                 .time(reservation.getTime())
                 .reservationStatus(reservation.getReservationStatus())
                 .build();
-    }
-
-    @Transactional(readOnly = true)
-    public List<ReservationDto> findAllConfirmedReservationWithoutReview(Long memberId) {
-        return reservationRepository
-                .findByMemberIdAndReservationStatusAndReviewIsNull(memberId, CONFIRMED)
-                .stream().map(reservation -> new ReservationDto().builder()
-                        .memberId(reservation.getMember().getId())
-                        .storeId(reservation.getStore().getId())
-                        .reservationId(reservation.getId())
-                        .time(reservation.getTime())
-                        .reservationStatus(reservation.getReservationStatus())
-                        .build())
-                .collect(Collectors.toList());
     }
 }
