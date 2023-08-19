@@ -41,8 +41,9 @@ public class StoreService {
 
     @Transactional(readOnly = true)
     public List<StoreDto> findAll() {
-        return storeRepository.findAll().stream().map(store ->
-                        storeToDto(store))
+        return storeRepository.findAll()
+                .stream()
+                .map(this::storeToDto)
                 .collect(Collectors.toList());
     }
 
