@@ -3,6 +3,7 @@ package zerobase.reservation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import zerobase.reservation.dto.Result;
 import zerobase.reservation.dto.ReviewDto;
 import zerobase.reservation.service.ReviewService;
 
@@ -22,19 +23,19 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/member/{memberId}")
-    public ResponseEntity<List<ReviewDto>> findAllByMemberId(
+    public ResponseEntity<Result> findAllByMemberId(
             @PathVariable("memberId") Long id
     ) {
         List<ReviewDto> reviewDtosByMemberId = reviewService.findAllByMemberId(id);
-        return ResponseEntity.ok(reviewDtosByMemberId);
+        return ResponseEntity.ok(new Result(reviewDtosByMemberId.size(), reviewDtosByMemberId));
     }
 
     @GetMapping("/reviews/store/{storeId}")
-    public ResponseEntity<List<ReviewDto>> findAllByStoreId(
+    public ResponseEntity<Result> findAllByStoreId(
             @PathVariable("storeId") Long id
     ) {
         List<ReviewDto> reviewDtosByMemberId = reviewService.findAllByStoreId(id);
-        return ResponseEntity.ok(reviewDtosByMemberId);
+        return ResponseEntity.ok(new Result(reviewDtosByMemberId.size(),reviewDtosByMemberId));
     }
 
     @PutMapping("/review/{reviewId}")

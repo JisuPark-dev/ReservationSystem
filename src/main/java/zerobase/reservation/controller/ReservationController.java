@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.dto.ReservationDto;
+import zerobase.reservation.dto.Result;
 import zerobase.reservation.service.ReservationService;
 
 import java.util.List;
@@ -23,27 +24,27 @@ public class ReservationController {
 
 
     @GetMapping("/reservations/member/{memberId}")
-    public ResponseEntity<List<ReservationDto>> findAllByMemberId(
+    public ResponseEntity<Result> findAllByMemberId(
             @PathVariable("memberId") Long id
     ) {
         List<ReservationDto> reservationDtos = reservationService.findAllByMemberId(id);
-        return ResponseEntity.ok(reservationDtos);
+        return ResponseEntity.ok(new Result(reservationDtos.size(), reservationDtos));
     }
 
     @GetMapping("/reservations/store/{storeId}")
-    public ResponseEntity<List<ReservationDto>> findAllByStoreId(
+    public ResponseEntity<Result> findAllByStoreId(
             @PathVariable("storeId") Long id
     ) {
         List<ReservationDto> reservationDtos = reservationService.findAllByStoreId(id);
-        return ResponseEntity.ok(reservationDtos);
+        return ResponseEntity.ok(new Result(reservationDtos.size(), reservationDtos));
     }
 
     @GetMapping("reservations/without_review/member/{memberId}")
-    public ResponseEntity<List<ReservationDto>> findAllConfirmedReservationWithoutReview(
+    public ResponseEntity<Result> findAllConfirmedReservationWithoutReview(
             @PathVariable("memberId") Long id
     ) {
         List<ReservationDto> reservationDtosWithoutReview = reservationService.findAllConfirmedReservationWithoutReview(id);
-        return ResponseEntity.ok(reservationDtosWithoutReview);
+        return ResponseEntity.ok(new Result(reservationDtosWithoutReview.size(), reservationDtosWithoutReview));
     }
 
     @PutMapping("/reservation/confirm")
