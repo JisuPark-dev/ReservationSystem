@@ -111,7 +111,8 @@
 <details>
 <summary>요쳥경로 / 결과</summary>
 
-<img width="651" alt="스크린샷 2023-08-21 오후 12 52 50" src="https://github.com/JisuPark-dev/ReservationSystem/assets/122674412/1686abca-9f45-48c0-9a8d-2fc61f40b081">
+<img width="680" alt="스크린샷 2023-08-21 오후 1 03 25" src="https://github.com/JisuPark-dev/ReservationSystem/assets/122674412/75f641eb-9f8c-4ea2-96c1-6a212fdc723d">
+
 
 요쳥경로 : [GET] http://localhost:8080/store/15
 
@@ -134,6 +135,9 @@
 ### 4) 매장 정보 수정
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
+
+<img width="680" alt="스크린샷 2023-08-21 오후 1 04 04" src="https://github.com/JisuPark-dev/ReservationSystem/assets/122674412/91bc250c-4dc3-4a9a-baf7-4ef02ddd999f">
+
 요청경로 : [PUT] http://localhost:8080/store/13
 
 파라미터 

@@ -50,12 +50,16 @@ public class StoreService {
     public StoreDto updateStore(StoreDto storeDto, Long id) {
         Store store = storeRepository.findById(id).get();
 
+        updateStore(storeDto, store);
+
+        return storeToDto(store);
+    }
+
+    private void updateStore(StoreDto storeDto, Store store) {
         store.setName(storeDto.getName());
         store.setLocation(storeDto.getLocation());
         store.setDescription(storeDto.getDescription());
         store.setUpdatedAt(LocalDateTime.now());
-
-        return storeToDto(store);
     }
 
     public void deleteStore(Long id) {
