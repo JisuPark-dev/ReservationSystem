@@ -41,6 +41,8 @@
 ### 1) 매장등록
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
+<img width="932" alt="스크린샷 2023-08-21 오후 12 20 24" src="https://github.com/JisuPark-dev/ReservationSystem/assets/122674412/21506602-819e-4437-8ced-48f005bbb242">
+
 요쳥경로 : [POST] http://localhost:8080/store
 
 파라미터
