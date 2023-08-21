@@ -76,23 +76,26 @@
 
 결과
 ~~~
-[
-    {
-        "storeId": 7,
-        "memberId": 6,
-        "name": "update Test2 Name2",
-        "location": "seoul",
-        "description": "test description"
-    },
-    {
-        "storeId": 11,
-        "memberId": 10,
-        "name": "testStore2",
-        "location": "seoul",
-        "description": "test description2"
-    },
-    ...
-]
+{
+    "count": 11,
+    "data": [
+        {
+            "storeId": 7,
+            "memberId": 6,
+            "name": "update Test2 Name2",
+            "location": "seoul",
+            "description": "test description"
+        },
+        {
+            "storeId": 11,
+            "memberId": 10,
+            "name": "testStore2",
+            "location": "seoul",
+            "description": "test description2"
+        },
+        ...
+    ]
+}
 ~~~
 
 </details>
@@ -106,11 +109,14 @@
 결과
 ~~~
 {
-    "storeId": 15,
-    "memberId": 2,
-    "name": "testStore4",
-    "location": "seoul",
-    "description": "test description2"
+    "count": 1,
+    "data": {
+        "storeId": 15,
+        "memberId": 2,
+        "name": "testStore4",
+        "location": "seoul",
+        "description": "test description2"
+    }
 }
 ~~~
 
@@ -189,23 +195,18 @@
 
 결과
 ~~~
-[
-    {
-        "memberId": 19,
-        "storeId": 15,
-        "reservationId": 39,
-        "time": "2023-08-18T14:30:00",
-        "reservationStatus": "CANCELED"
-    },
-    {
-        "memberId": 19,
-        "storeId": 15,
-        "reservationId": 40,
-        "time": "2023-08-18T14:30:00",
-        "reservationStatus": "CONFIRMED"
-    },
-        ...
-]
+{
+    "count": 1,
+    "data": [
+        {
+            "memberId": 2,
+            "storeId": 15,
+            "reservationId": 18,
+            "time": "2023-08-18T14:30:00",
+            "reservationStatus": "CONFIRMED"
+        }
+    ]
+}
 ~~~
 
 </details>
@@ -218,23 +219,19 @@
 
 결과 
 ~~~
-[
-    {
-        "memberId": 2,
-        "storeId": 15,
-        "reservationId": 39,
-        "time": "2023-08-18T14:30:00",
-        "reservationStatus": "REQUESTED"
-    },
-    {
-        "memberId": 19,
-        "storeId": 15,
-        "reservationId": 40,
-        "time": "2023-08-18T14:30:00",
-        "reservationStatus": "CANCELED"
-    },
-    ...
-]
+{
+    "count": 4,
+    "data": [
+        {
+            "memberId": 2,
+            "storeId": 15,
+            "reservationId": 18,
+            "time": "2023-08-18T14:30:00",
+            "reservationStatus": "CONFIRMED"
+        },
+        ...
+    ]
+}
 ~~~
 
 </details>
@@ -288,16 +285,18 @@
 
 결과
 ~~~
-[
-    {
-        "memberId": 19,
-        "storeId": 15,
-        "reservationId": 40,
-        "time": "2023-08-18T14:30:00",
-        "reservationStatus": "CONFIRMED"
-    },
-    ...
-]
+{
+    "count": 1,
+    "data": [
+        {
+            "memberId": 19,
+            "storeId": 15,
+            "reservationId": 40,
+            "time": "2023-08-18T14:30:00",
+            "reservationStatus": "CONFIRMED"
+        }
+    ]
+}
 ~~~
 
 </details>
@@ -339,15 +338,18 @@
 
 결과
 ~~~
-[
-    {
-        "memberId": 48,
-        "storeId": 39,
-        "reservationId": 51,
-        "reviewId": 52,
-        "content": "review test!!@@"
-    }
-]
+{
+    "count": 1,
+    "data": [
+        {
+            "memberId": 48,
+            "storeId": 39,
+            "reservationId": 53,
+            "reviewId": 58,
+            "content": "review content is updated!!!!2"
+        }
+    ]
+}
 ~~~
 
 </details>
@@ -360,15 +362,19 @@
 
 결과
 ~~~
-[
-    {
-        "memberId": 48,
-        "storeId": 39,
-        "reservationId": 51,
-        "reviewId": 52,
-        "content": "review test!!@@"
-    }
-]
+{
+    "count": 3,
+    "data": [
+        {
+            "memberId": 19,
+            "storeId": 15,
+            "reservationId": 20,
+            "reviewId": 27,
+            "content": "review test2"
+        },
+        ...
+    ]
+}
 ~~~
 </details>
 
