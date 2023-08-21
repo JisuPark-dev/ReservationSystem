@@ -72,7 +72,7 @@
 
 ### 2) 매장 리스트 조회
 <details>
-<summary>요쳥경로 / 결과</summary>
+<summary>요청경로 / 결과</summary>
 
 <img width="651" alt="스크린샷 2023-08-21 오후 12 52 13" src="https://github.com/JisuPark-dev/ReservationSystem/assets/122674412/353c6807-7d1c-49d3-b5fc-3b78600ce085">
 
@@ -109,7 +109,7 @@
 
 ### 3) 매장 상세정보 조회
 <details>
-<summary>요쳥경로 / 결과</summary>
+<summary>요청경로 / 결과</summary>
 
 <img width="680" alt="스크린샷 2023-08-21 오후 1 03 25" src="https://github.com/JisuPark-dev/ReservationSystem/assets/122674412/75f641eb-9f8c-4ea2-96c1-6a212fdc723d">
 
@@ -165,7 +165,7 @@
 
 ### 5) 매장 정보 삭제(등록 해제)
 <details>
-<summary>요쳥경로 / 결과</summary>
+<summary>요청경로 / 결과</summary>
 
 요쳥경로 : [DELETE] http://localhost:8080/store/9
 
@@ -317,7 +317,7 @@
 ## ✅ 리뷰 관련 API
 ### 1) 리뷰 등록
 <details>
-<summary>요쳥경로 / 파라미터 / 결과</summary>
+<summary>요청경로 / 파라미터 / 결과</summary>
 
 요쳥경로 : [POST] http://localhost:8080/review
 
@@ -345,7 +345,7 @@
 
 ### 2) 사용자별 작성된 리뷰 조회
 <details>
-<summary>요쳥경로 / 결과</summary>
+<summary>요청경로 / 결과</summary>
 
 요쳥경로 : [GET] http://localhost:8080/reviews/member/48
 
@@ -369,7 +369,7 @@
 
 ### 3) 매장별 작성된 리뷰 조회
 <details>
-<summary>요쳥경로 / 결과</summary>
+<summary>요청경로 / 결과</summary>
 
 요쳥경로 : [GET] http://localhost:8080/reviews/store/39
 
@@ -393,7 +393,7 @@
 
 ### 4) 리뷰 수정
 <details>
-<summary>요쳥경로 / 파라미터 / 결과</summary>
+<summary>요청경로 / 파라미터 / 결과</summary>
 
 요쳥경로 : [PUT] http://localhost:8080/review/52
 
@@ -418,7 +418,7 @@
 
 ### 5) 리뷰 삭제
 <details>
-<summary>요쳥경로 / 결과</summary>
+<summary>요청경로 / 결과</summary>
 
 요쳥경로 : [DELETE] http://localhost:8080/review/50
 
