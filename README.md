@@ -36,6 +36,37 @@
 ~~~
 </details>
 
+### 2) 간단 로그인 
+
+<details>
+<summary>요청경로 / 파라미터 / 결과</summary>
+요쳥경로 : [POST] http://localhost:8080/login
+
+파라미터
+
+~~~
+{
+    "username" : "jisu",
+    "password" : "dodlal12345"
+}
+~~~
+
+결과
+- 성공시
+~~~
+{
+    "username": "jisu",
+    "password": null,
+    "memberStatus": "PARTNER"
+}
+~~~
+- 실패시 
+~~~
+{
+    로그인 정보가 올바르지 않습니다.
+}
+~~~
+</details>
 
 ## ✅ 매장 관련 API
 ### 1) 매장등록
