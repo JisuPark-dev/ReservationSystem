@@ -1,11 +1,13 @@
 package zerobase.reservation.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.type.MemberStatus;
 
 @Getter @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MemberDto {
     private String username;
     private String password;
