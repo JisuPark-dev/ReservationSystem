@@ -3,6 +3,7 @@ package zerobase.reservation.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import zerobase.reservation.dto.MemberOwnedStoreReservationsDto;
 import zerobase.reservation.dto.Result;
 import zerobase.reservation.dto.StoreDto;
 import zerobase.reservation.repository.StoreRepository;
@@ -42,6 +43,12 @@ public class StoreController {
     public ResponseEntity<Result> findByMember(@PathVariable("memberId") Long id) {
         List<StoreDto> storeDtos = storeService.findByMember(id);
         return ResponseEntity.ok(new Result(storeDtos.size(), storeDtos));
+    }
+
+    @GetMapping("/members/{memberId}/owned-stores/reservations")
+    public ResponseEntity<Result> findReservationsForMemberStores(@PathVariable("memberId") Long id) {
+        List<MemberOwnedStoreReservationsDto> memberOwnedStoreReservationsDto = storeService.findReservationsForMemberStores(id);
+        return ResponseEntity.ok(new Result(memberOwnedStoreReservationsDto.size(), memberOwnedStoreReservationsDto));
     }
 
     @PutMapping("/store/{storeId}")

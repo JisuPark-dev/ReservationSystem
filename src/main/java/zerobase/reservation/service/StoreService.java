@@ -4,12 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zerobase.reservation.dao.Member;
+import zerobase.reservation.dao.Reservation;
 import zerobase.reservation.dao.Store;
+import zerobase.reservation.dto.MemberOwnedStoreReservationsDto;
 import zerobase.reservation.dto.StoreDto;
 import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.StoreRepository;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
@@ -84,5 +87,27 @@ public class StoreService {
                 .build();
     }
 
+
+    public List<MemberOwnedStoreReservationsDto> findReservationsForMemberStores(Long id) {
+        List<MemberOwnedStoreReservationsDto> result = new ArrayList<>();
+
+        List<Store> stores = storeRepository.findByMemberId(id);
+
+        for (Store store : stores) {
+            List<Reservation> reservations = store.getReservationList();
+
+            for(Reservation reservation : reservations){
+                MemberOwnedStoreReservationsDto dto = MemberOwnedStoreReservationsDto.builder()
+                        .storeName(store.getName())
+                        .reservationMemberName(memberRepository.findById(id).get().getUsername())
+                        .createdAt(reservation.getCreatedAt())
+                        .reservationAt(reservation.getTime())
+                        .build();
+
+                result.add(dto);
+            }
+        }
+        return result;
+    }
 
 }

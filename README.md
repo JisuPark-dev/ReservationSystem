@@ -169,7 +169,7 @@
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
 
-요청경로 : [PUT] http://localhost:8080/store/member/1
+요청경로 : [GET] http://localhost:8080/store/member/1
 
 파라미터
 
@@ -192,7 +192,34 @@
 
 </details>
 
-### 5) 매장 정보 수정
+### 5) 회원이 소유하고 있는 매장의 모든 예약 정보 조회
+
+<details>
+<summary>요청경로 / 파라미터 / 결과</summary>
+
+요청경로 : [GET] http://localhost:8080/members/{memberId}/owned-stores/reservations
+
+파라미터
+
+결과
+~~~
+{
+    "count": 2,
+    "data": [
+        {
+            "storeName": "testStore",
+            "reservationMemberName": "jisu",
+            "createdAt": "2023-08-26T12:19:23.405085",
+            "reservationAt": "2023-08-18T14:30:00"
+        },
+        ...
+    ]
+}
+~~~
+
+</details>
+
+### 6) 매장 정보 수정
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
 
@@ -223,7 +250,7 @@
 </details>
 
 
-### 6) 매장 정보 삭제(등록 해제)
+### 7) 매장 정보 삭제(등록 해제)
 <details>
 <summary>요청경로 / 결과</summary>
 

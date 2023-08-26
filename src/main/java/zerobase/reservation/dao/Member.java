@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import zerobase.reservation.type.MemberStatus;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -23,4 +25,10 @@ public class Member {
     private String password;
     @Enumerated(EnumType.STRING)
     private MemberStatus memberStatus;
+
+    @OneToMany(mappedBy = "member")
+    private List<Store> store = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Reservation> reservation = new ArrayList<>();
 }
