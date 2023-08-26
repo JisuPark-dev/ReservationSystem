@@ -38,6 +38,12 @@ public class StoreController {
         return ResponseEntity.ok(new Result(1, storeDto));
     }
 
+    @GetMapping("/store/member/{memberId}")
+    public ResponseEntity<Result> findByMember(@PathVariable("memberId") Long id) {
+        List<StoreDto> storeDtos = storeService.findByMember(id);
+        return ResponseEntity.ok(new Result(storeDtos.size(), storeDtos));
+    }
+
     @PutMapping("/store/{storeId}")
     public ResponseEntity<StoreDto> update(
             @RequestBody StoreDto storeDto,

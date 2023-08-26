@@ -47,6 +47,14 @@ public class StoreService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public List<StoreDto> findByMember(Long id) {
+        return storeRepository.findByMemberId(id)
+                .stream()
+                .map(this::storeToDto)
+                .collect(Collectors.toList());
+    }
+
     public StoreDto updateStore(StoreDto storeDto, Long id) {
         Store store = storeRepository.findById(id).get();
 
@@ -75,4 +83,6 @@ public class StoreService {
                 .description(store.getDescription())
                 .build();
     }
+
+
 }

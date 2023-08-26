@@ -163,7 +163,36 @@
 
 </details>
 
-### 4) 매장 정보 수정
+
+### 4) 사용자별 본인 매장 조회
+
+<details>
+<summary>요청경로 / 파라미터 / 결과</summary>
+
+요청경로 : [PUT] http://localhost:8080/store/member/1
+
+파라미터
+
+결과
+~~~
+{
+    "count": 3,
+    "data": [
+        {
+            "storeId": 3,
+            "memberId": 1,
+            "name": "testStore",
+            "location": "seoul",
+            "description": "test description"
+        },
+        ...
+    ]
+}
+~~~
+
+</details>
+
+### 5) 매장 정보 수정
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
 
@@ -194,7 +223,7 @@
 </details>
 
 
-### 5) 매장 정보 삭제(등록 해제)
+### 6) 매장 정보 삭제(등록 해제)
 <details>
 <summary>요청경로 / 결과</summary>
 
