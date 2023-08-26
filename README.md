@@ -9,7 +9,7 @@
 
 # API 명세서
 
-## ✅ 사용자 관련 API
+## ✅ 1. 사용자 관련 API
 ### 1) 사용자 생성
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
@@ -68,7 +68,7 @@
 ~~~
 </details>
 
-## ✅ 매장 관련 API
+## ✅ 2. 매장 관련 API
 ### 1) 매장등록
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
@@ -259,7 +259,7 @@
 결과 : 삭제기능 구현
 </details>
 
-## ✅ 예약 관련 API
+## ✅ 3. 예약 관련 API
 ### 1) 예약 생성
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
@@ -401,7 +401,7 @@
 
 </details>
 
-## ✅ 리뷰 관련 API
+## ✅ 4. 리뷰 관련 API
 ### 1) 리뷰 등록
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
