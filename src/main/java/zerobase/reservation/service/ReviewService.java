@@ -92,6 +92,8 @@ public class ReviewService {
         if (reviewOpt.isPresent()) {
             Review review = reviewOpt.get();
 
+            //사용자 인증 코드 필요
+
             // 연관된 Reservation의 외래 키를 null로 설정
             Reservation reservation = review.getReservation();
             if (reservation != null) {

@@ -115,29 +115,32 @@ https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC
 
 
 
-요쳥경로 : [GET] http://localhost:8080/store
+요쳥경로 : [GET] http://localhost:8080/stores?page={currentPage}&size={pageSize}&sort=id,desc
+
+최신 매장부터 조회
 
 결과
 ~~~
 {
-    "count": 11,
+    "totalItems": 4,
     "data": [
         {
-            "storeId": 7,
-            "memberId": 6,
-            "name": "update Test2 Name2",
+            "storeId": 9,
+            "memberId": 1,
+            "name": "testStore4",
             "location": "seoul",
-            "description": "test description"
+            "description": "test description3"
         },
         {
-            "storeId": 11,
-            "memberId": 10,
-            "name": "testStore2",
+            "storeId": 5,
+            "memberId": 1,
+            "name": "testStore3",
             "location": "seoul",
-            "description": "test description2"
-        },
-        ...
-    ]
+            "description": "test description3"
+        }
+    ],
+    "totalPages": 2,
+    "currentPage": 0
 }
 ~~~
 
@@ -175,14 +178,14 @@ https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
 
-요청경로 : [GET] http://localhost:8080/store/member/1
+요청경로 : [GET] http://localhost:8080/store/member/1?page={currentPage}&size={pageSize}
 
 파라미터
 
 결과
 ~~~
 {
-    "count": 3,
+    "totalItems": 4,
     "data": [
         {
             "storeId": 3,
@@ -191,8 +194,16 @@ https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC
             "location": "seoul",
             "description": "test description"
         },
-        ...
-    ]
+        {
+            "storeId": 4,
+            "memberId": 1,
+            "name": "testStore2",
+            "location": "seoul",
+            "description": "test description2"
+        }
+    ],
+    "totalPages": 2,
+    "currentPage": 0
 }
 ~~~
 
@@ -203,23 +214,24 @@ https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC
 <details>
 <summary>요청경로 / 파라미터 / 결과</summary>
 
-요청경로 : [GET] http://localhost:8080/members/{memberId}/owned-stores/reservations
+요청경로 : [GET] http://localhost:8080/members/1/owned-stores/reservations?page={currentPage}&size={pageSize}
 
 파라미터
 
 결과
 ~~~
 {
-    "count": 2,
+    "totalItems": 2,
     "data": [
         {
-            "storeName": "testStore",
+            "storeName": "testStore2",
             "reservationMemberName": "jisu",
-            "createdAt": "2023-08-26T12:19:23.405085",
+            "createdAt": "2023-08-26T12:19:45.269286",
             "reservationAt": "2023-08-18T14:30:00"
-        },
-        ...
-    ]
+        }
+    ],
+    "totalPages": 2,
+    "currentPage": 1
 }
 ~~~
 
