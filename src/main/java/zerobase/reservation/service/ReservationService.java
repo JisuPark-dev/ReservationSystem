@@ -1,6 +1,8 @@
 package zerobase.reservation.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zerobase.reservation.dao.Member;
@@ -38,19 +40,16 @@ public class ReservationService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReservationDto> findAllByMemberId(Long memberId) {
-        return reservationRepository.findAllByMemberId(memberId)
-                .stream()
-                .map(this::reservationToDto)
-                .collect(Collectors.toList());
+    public Page<ReservationDto> findAllByMemberId(Long memberId, Pageable pageable) {
+        Page<Reservation> reservations = reservationRepository.findAllByMemberId(memberId, pageable);
+        return reservations.map(this::reservationToDto);
+
     }
 
     @Transactional(readOnly = true)
-    public List<ReservationDto> findAllByStoreId(Long StoreId) {
-        return reservationRepository.findAllByStoreId(StoreId)
-                .stream()
-                .map(this::reservationToDto)
-                .collect(Collectors.toList());
+    public Page<ReservationDto> findAllByStoreId(Long StoreId, Pageable pageable) {
+        Page<Reservation> allByStoreId = reservationRepository.findAllByStoreId(StoreId, pageable);
+        return allByStoreId.map(this::reservationToDto);
     }
 
     public ReservationDto confirmReservation(Long reservationId) {
@@ -68,12 +67,10 @@ public class ReservationService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReservationDto> findAllConfirmedReservationWithoutReview(Long memberId) {
-        return reservationRepository
-                .findByMemberIdAndReservationStatusAndReviewIsNull(memberId, CONFIRMED)
-                .stream()
-                .map(this::reservationToDto)
-                .collect(Collectors.toList());
+    public Page<ReservationDto> findAllConfirmedReservationWithoutReview(Long memberId, Pageable pageable) {
+        Page<Reservation> byMemberIdAndReservationStatusAndReviewIsNull = reservationRepository
+                .findByMemberIdAndReservationStatusAndReviewIsNull(memberId, CONFIRMED, pageable);
+        return byMemberIdAndReservationStatusAndReviewIsNull.map(this::reservationToDto);
     }
 
     private ReservationDto reservationToDto(Reservation reservation) {

@@ -1,13 +1,17 @@
 package zerobase.reservation.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.dto.ReservationDto;
 import zerobase.reservation.dto.Result;
 import zerobase.reservation.service.ReservationService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -24,27 +28,45 @@ public class ReservationController {
 
 
     @GetMapping("/reservations/member/{memberId}")
-    public ResponseEntity<Result> findAllByMemberId(
-            @PathVariable("memberId") Long id
+    public ResponseEntity<Map<String, Object>> findAllByMemberId(
+            @PathVariable("memberId") Long id,
+            Pageable pageable
     ) {
-        List<ReservationDto> reservationDtos = reservationService.findAllByMemberId(id);
-        return ResponseEntity.ok(new Result(reservationDtos.size(), reservationDtos));
+        Page<ReservationDto> reservationPage = reservationService.findAllByMemberId(id, pageable);
+
+        Map<String, Object> response = getPageableResponse(reservationPage);
+
+        return ResponseEntity.ok(response);
     }
 
+
     @GetMapping("/reservations/store/{storeId}")
-    public ResponseEntity<Result> findAllByStoreId(
-            @PathVariable("storeId") Long id
+    public ResponseEntity<Map<String, Object>> findAllByStoreId(
+            @PathVariable("storeId") Long id,
+            Pageable pageable
     ) {
-        List<ReservationDto> reservationDtos = reservationService.findAllByStoreId(id);
-        return ResponseEntity.ok(new Result(reservationDtos.size(), reservationDtos));
+        Page<ReservationDto> allByStoreId = reservationService.findAllByStoreId(id, pageable);
+        Map<String, Object> response = getPageableResponse(allByStoreId);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping("reservations/without_review/member/{memberId}")
-    public ResponseEntity<Result> findAllConfirmedReservationWithoutReview(
-            @PathVariable("memberId") Long id
+    public ResponseEntity<Map<String, Object>> findAllConfirmedReservationWithoutReview(
+            @PathVariable("memberId") Long id,
+            Pageable pageable
     ) {
-        List<ReservationDto> reservationDtosWithoutReview = reservationService.findAllConfirmedReservationWithoutReview(id);
-        return ResponseEntity.ok(new Result(reservationDtosWithoutReview.size(), reservationDtosWithoutReview));
+        Page<ReservationDto> allConfirmedReservationWithoutReview = reservationService.findAllConfirmedReservationWithoutReview(id, pageable);
+        Map<String, Object> response = getPageableResponse(allConfirmedReservationWithoutReview);
+        return ResponseEntity.ok(response);
+    }
+
+    private Map<String, Object> getPageableResponse(Page<ReservationDto> reservationPage) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", reservationPage.getContent());
+        response.put("currentPage", reservationPage.getNumber());
+        response.put("totalItems", reservationPage.getTotalElements());
+        response.put("totalPages", reservationPage.getTotalPages());
+        return response;
     }
 
     @PutMapping("/reservation/confirm")

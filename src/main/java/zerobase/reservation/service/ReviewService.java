@@ -1,6 +1,9 @@
 package zerobase.reservation.service;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zerobase.reservation.dao.Member;
@@ -57,22 +60,27 @@ public class ReviewService {
     }
 
     @Transactional(readOnly = true)
-    public List<ReviewDto> findAllByMemberId(Long memberId) {
-        return reviewRepository.findAllByMemberIdAndContentIsNotNull(memberId)
-                .stream()
+    public Page<ReviewDto> findAllByMemberId(Long memberId, Pageable pageable) {
+        Page<Review> reviews = reviewRepository.findAllByMemberIdAndContentIsNotNull(memberId, pageable);
+
+        List<ReviewDto> filteredReviews = reviews.stream()
                 .filter(review -> review.getStore() != null && review.getReservation() != null)
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+
+        return new PageImpl<>(filteredReviews, pageable, reviews.getTotalElements());
     }
 
 
+
     @Transactional(readOnly = true)
-    public List<ReviewDto> findAllByStoreId(Long StoreId) {
-        return reviewRepository.findAllByStoreIdAndContentIsNotNull(StoreId)
-                .stream()
+    public Page<ReviewDto> findAllByStoreId(Long StoreId, Pageable pageable) {
+        Page<Review> allByStoreIdAndContentIsNotNull = reviewRepository.findAllByStoreIdAndContentIsNotNull(StoreId, pageable);
+        List<ReviewDto> collect = allByStoreIdAndContentIsNotNull.stream()
                 .filter(review -> review.getStore() != null && review.getReservation() != null)
                 .map(this::convertToDto)
                 .collect(Collectors.toList());
+        return new PageImpl<>(collect, pageable, allByStoreIdAndContentIsNotNull.getTotalElements());
     }
 
     public ReviewDto updateStore(ReviewDto reviewDto, Long id) {

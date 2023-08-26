@@ -1,13 +1,18 @@
 package zerobase.reservation.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import zerobase.reservation.dto.ReservationDto;
 import zerobase.reservation.dto.Result;
 import zerobase.reservation.dto.ReviewDto;
 import zerobase.reservation.service.ReviewService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
@@ -23,19 +28,35 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/member/{memberId}")
-    public ResponseEntity<Result> findAllByMemberId(
-            @PathVariable("memberId") Long id
+    public ResponseEntity<Map<String, Object>> findAllByMemberId(
+            @PathVariable("memberId") Long id,
+            Pageable pageable
     ) {
-        List<ReviewDto> reviewDtosByMemberId = reviewService.findAllByMemberId(id);
-        return ResponseEntity.ok(new Result(reviewDtosByMemberId.size(), reviewDtosByMemberId));
+        Page<ReviewDto> reservationPage = reviewService.findAllByMemberId(id, pageable);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", reservationPage.getContent());
+        response.put("currentPage", reservationPage.getNumber());
+        response.put("totalItems", reservationPage.getTotalElements());
+        response.put("totalPages", reservationPage.getTotalPages());
+
+        return ResponseEntity.ok(response);
     }
 
+
     @GetMapping("/reviews/store/{storeId}")
-    public ResponseEntity<Result> findAllByStoreId(
-            @PathVariable("storeId") Long id
+    public ResponseEntity<Map<String, Object>> findAllByStoreId(
+            @PathVariable("storeId") Long id,
+            Pageable pageable
     ) {
-        List<ReviewDto> reviewDtosByMemberId = reviewService.findAllByStoreId(id);
-        return ResponseEntity.ok(new Result(reviewDtosByMemberId.size(),reviewDtosByMemberId));
+        Page<ReviewDto> reviewDtosByMemberId = reviewService.findAllByStoreId(id, pageable);
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", reviewDtosByMemberId.getContent());
+        response.put("currentPage", reviewDtosByMemberId.getNumber());
+        response.put("totalItems", reviewDtosByMemberId.getTotalElements());
+        response.put("totalPages", reviewDtosByMemberId.getTotalPages());
+
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/review/{reviewId}")

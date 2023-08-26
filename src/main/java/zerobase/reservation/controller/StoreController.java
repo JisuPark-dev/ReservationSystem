@@ -32,22 +32,22 @@ public class StoreController {
         return ResponseEntity.ok(storeDto);
     }
 
-//    @GetMapping("/stores")
-//    public ResponseEntity<Result> findAll(Pageable pageable) {
-//        Page<StoreDto> storeDtos = storeService.findAll(pageable);
-//        return ResponseEntity.ok(new Result(storeDtos.size(), storeDtos));
-//    }
     @GetMapping("/stores")
     public ResponseEntity<Map<String, Object>> findAll(Pageable pageable) {
         Page<StoreDto> pagedStores = storeService.findAll(pageable);
 
+        Map<String, Object> response = getPageableStoreDto(pagedStores);
+
+        return ResponseEntity.ok(response);
+    }
+
+    private Map<String, Object> getPageableStoreDto(Page<StoreDto> pagedStores) {
         Map<String, Object> response = new HashMap<>();
         response.put("data", pagedStores.getContent());
         response.put("currentPage", pagedStores.getNumber());
         response.put("totalItems", pagedStores.getTotalElements());
         response.put("totalPages", pagedStores.getTotalPages());
-
-        return ResponseEntity.ok(response);
+        return response;
     }
 
 
@@ -61,11 +61,7 @@ public class StoreController {
     public ResponseEntity<Map<String, Object>> findByMember(@PathVariable("memberId") Long id, Pageable pageable) {
         Page<StoreDto> storePage = storeService.findByMember(id, pageable);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("data", storePage.getContent());
-        response.put("currentPage", storePage.getNumber());
-        response.put("totalItems", storePage.getTotalElements());
-        response.put("totalPages", storePage.getTotalPages());
+        Map<String, Object> response = getPageableStoreDto(storePage);
 
         return ResponseEntity.ok(response);
     }
@@ -75,13 +71,18 @@ public class StoreController {
     public ResponseEntity<Map<String, Object>> findReservationsForMemberStores(@PathVariable("memberId") Long id, Pageable pageable) {
         Page<MemberOwnedStoreReservationsDto> reservationPage = storeService.findReservationsForMemberStores(id, pageable);
 
+        Map<String, Object> response = getStringObjectMap(reservationPage);
+
+        return ResponseEntity.ok(response);
+    }
+
+    private Map<String, Object> getStringObjectMap(Page<MemberOwnedStoreReservationsDto> reservationPage) {
         Map<String, Object> response = new HashMap<>();
         response.put("data", reservationPage.getContent());
         response.put("currentPage", reservationPage.getNumber());
         response.put("totalItems", reservationPage.getTotalElements());
         response.put("totalPages", reservationPage.getTotalPages());
-
-        return ResponseEntity.ok(response);
+        return response;
     }
 
 

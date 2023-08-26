@@ -309,21 +309,30 @@ https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC
 <details>
 <summary>요청경로 / 결과</summary>
 
-요청경로 : [GET] http://localhost:8080/reservations/member/19
+요청경로 : [GET] http://localhost:8080/reservations/member/2?page={currentPage}&size={pageSize}
 
 결과
 ~~~
 {
-    "count": 1,
+    "totalItems": 2,
     "data": [
         {
             "memberId": 2,
-            "storeId": 15,
-            "reservationId": 18,
+            "storeId": 3,
+            "reservationId": 6,
             "time": "2023-08-18T14:30:00",
             "reservationStatus": "CONFIRMED"
+        },
+        {
+            "memberId": 2,
+            "storeId": 4,
+            "reservationId": 7,
+            "time": "2023-08-18T14:30:00",
+            "reservationStatus": "REQUESTED"
         }
-    ]
+    ],
+    "totalPages": 1,
+    "currentPage": 0
 }
 ~~~
 
@@ -333,22 +342,23 @@ https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC
 <details>
 <summary>요청경로 / 결과</summary>
 
-요청경로 : [GET]http://localhost:8080/reservations/store/15
+요청경로 : [GET] http://localhost:8080/reservations/store/3?page={currentPage}&size={pageSize}
 
 결과 
 ~~~
 {
-    "count": 4,
+    "totalItems": 1,
     "data": [
         {
             "memberId": 2,
-            "storeId": 15,
-            "reservationId": 18,
+            "storeId": 3,
+            "reservationId": 6,
             "time": "2023-08-18T14:30:00",
             "reservationStatus": "CONFIRMED"
-        },
-        ...
-    ]
+        }
+    ],
+    "totalPages": 1,
+    "currentPage": 0
 }
 ~~~
 
@@ -399,21 +409,15 @@ https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC
 <details>
 <summary>요청경로 / 결과</summary>
 
-요청경로 : [GET] http://localhost:8080/reservations/without_review/member/19
+요청경로 : [GET] http://localhost:8080/reservations/without_review/member/2?page={currentPage}&size={pageSize}
 
 결과
 ~~~
 {
-    "count": 1,
-    "data": [
-        {
-            "memberId": 19,
-            "storeId": 15,
-            "reservationId": 40,
-            "time": "2023-08-18T14:30:00",
-            "reservationStatus": "CONFIRMED"
-        }
-    ]
+    "totalItems": 0,
+    "data": [],
+    "totalPages": 0,
+    "currentPage": 0
 }
 ~~~
 
@@ -452,21 +456,23 @@ https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC
 <details>
 <summary>요청경로 / 결과</summary>
 
-요쳥경로 : [GET] http://localhost:8080/reviews/member/48
+요쳥경로 : [GET] http://localhost:8080/reviews/member/2?page={currentPage}&size={pageSize}
 
 결과
 ~~~
 {
-    "count": 1,
+    "totalItems": 1,
     "data": [
         {
-            "memberId": 48,
-            "storeId": 39,
-            "reservationId": 53,
-            "reviewId": 58,
-            "content": "review content is updated!!!!2"
+            "memberId": 2,
+            "storeId": 3,
+            "reservationId": 6,
+            "reviewId": 8,
+            "content": "review test"
         }
-    ]
+    ],
+    "totalPages": 1,
+    "currentPage": 0
 }
 ~~~
 
@@ -476,22 +482,23 @@ https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC
 <details>
 <summary>요청경로 / 결과</summary>
 
-요쳥경로 : [GET] http://localhost:8080/reviews/store/39
+요쳥경로 : [GET] http://localhost:8080/reviews/store/3?page={currentPage}&size={pageSize}
 
 결과
 ~~~
 {
-    "count": 3,
+    "totalItems": 1,
     "data": [
         {
-            "memberId": 19,
-            "storeId": 15,
-            "reservationId": 20,
-            "reviewId": 27,
-            "content": "review test2"
-        },
-        ...
-    ]
+            "memberId": 2,
+            "storeId": 3,
+            "reservationId": 6,
+            "reviewId": 8,
+            "content": "review test"
+        }
+    ],
+    "totalPages": 1,
+    "currentPage": 0
 }
 ~~~
 </details>
