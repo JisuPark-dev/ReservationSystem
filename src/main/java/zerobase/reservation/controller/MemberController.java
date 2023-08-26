@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.dto.MemberDto;
-import zerobase.reservation.dto.request.loginMemberRequest;
 import zerobase.reservation.service.MemberService;
 
 import javax.transaction.Transactional;

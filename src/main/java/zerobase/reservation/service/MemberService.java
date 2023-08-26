@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.dto.MemberDto;
-import zerobase.reservation.dto.request.loginMemberRequest;
 import zerobase.reservation.repository.MemberRepository;
 
 import java.util.Optional;

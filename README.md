@@ -7,7 +7,13 @@
 
 ---
 
-# API 명세서
+## 📺 화면 설계서(기획)
+Figma : 
+https://www.figma.com/file/BCAqdHXbMbGmMQcFsSdtDy/%EB%A7%A4%EC%9E%A5%EC%98%88%EC%95%BD-%EC%84%9C%EB%B9%84%EC%8A%A4?type=design&node-id=0-1&mode=design&t=IvoTxGUzLz0WExzf-0
+
+---
+
+# 📑 API 명세서
 
 ## ✅ 1. 사용자 관련 API
 ### 1) 사용자 생성
@@ -430,7 +436,7 @@
 ~~~
 </details>
 
-### 2) 사용자별 작성된 리뷰 조회
+### 2) 사용자별 작성한 리뷰 조회
 <details>
 <summary>요청경로 / 결과</summary>
 

@@ -1,8 +1,6 @@
 package zerobase.reservation.repository;
 
-import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
-import zerobase.reservation.dao.Member;
 import zerobase.reservation.dao.Store;
 
 import javax.transaction.Transactional;
@@ -14,4 +12,10 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     void deleteById(Long id);
 
     List<Store> findByMemberId(Long id);
+
+    Optional<Store> findByName(String name);
+
+    default boolean existsByName(String name) {
+        return findByName(name).isPresent();
+    }
 }

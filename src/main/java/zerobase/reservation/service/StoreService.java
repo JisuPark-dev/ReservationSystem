@@ -8,8 +8,10 @@ import zerobase.reservation.dao.Reservation;
 import zerobase.reservation.dao.Store;
 import zerobase.reservation.dto.MemberOwnedStoreReservationsDto;
 import zerobase.reservation.dto.StoreDto;
+import zerobase.reservation.exception.ReservationException;
 import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.StoreRepository;
+import zerobase.reservation.type.MemberStatus;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 import static zerobase.reservation.dto.StoreDto.toStoreEntity;
+import static zerobase.reservation.type.ErrorCode.*;
+
 
 @Service
 @RequiredArgsConstructor
@@ -29,11 +33,20 @@ public class StoreService {
 
     public StoreDto join(StoreDto storeDto) {
         Member member = memberRepository.findById(storeDto.getMemberId())
-                .orElseThrow(() -> new NoSuchElementException("Member not found with id: " + storeDto.getMemberId()));
+                .orElseThrow(() -> new ReservationException(MEMBER_NOT_FOUND));
+
+        if (storeRepository.existsByName(storeDto.getName())) {
+            throw new ReservationException(ALREADY_EXIST_STORE);
+        }
+
+        if (member.getMemberStatus() != MemberStatus.PARTNER) {
+            throw new ReservationException(INVALID_MEMBER_STATUS_ERROR);
+        }
 
         Store savedStore = storeRepository.save(toStoreEntity(member, storeDto));
         return storeToDto(savedStore);
     }
+
 
     @Transactional(readOnly = true)
     public StoreDto findById(Long id) {
