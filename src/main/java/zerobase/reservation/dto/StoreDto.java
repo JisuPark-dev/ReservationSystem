@@ -16,6 +16,8 @@ public class StoreDto {
     private String name;
     private String location;
     private String description;
+    private double x;
+    private double y;
     
     public static Store toStoreEntity(Member member, StoreDto storeDto) {
 
@@ -24,6 +26,8 @@ public class StoreDto {
                 .name(storeDto.getName())
                 .location(storeDto.getLocation())
                 .description(storeDto.getDescription())
+                .x(storeDto.getX())
+                .y(storeDto.getY())
                 .createdAt(LocalDateTime.now())
                 .build();
     }

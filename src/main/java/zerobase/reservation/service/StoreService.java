@@ -16,11 +16,9 @@ import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.StoreRepository;
 import zerobase.reservation.type.MemberStatus;
 
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static zerobase.reservation.dto.StoreDto.toStoreEntity;
 import static zerobase.reservation.type.ErrorCode.*;
@@ -83,6 +81,8 @@ public class StoreService {
         store.setName(storeDto.getName());
         store.setLocation(storeDto.getLocation());
         store.setDescription(storeDto.getDescription());
+        store.setX(storeDto.getX());
+        store.setY(store.getY());
         store.setUpdatedAt(LocalDateTime.now());
     }
 
@@ -97,6 +97,8 @@ public class StoreService {
                 .name(store.getName())
                 .location(store.getLocation())
                 .description(store.getDescription())
+                .x(store.getX())
+                .y(store.getY())
                 .build();
     }
 

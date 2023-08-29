@@ -30,6 +30,10 @@ public class Store {
 
     private String location;
     private String description;
+
+    private double x;
+    private double y;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 }

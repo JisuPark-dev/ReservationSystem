@@ -6,11 +6,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import zerobase.reservation.dto.ReservationDto;
-import zerobase.reservation.dto.Result;
 import zerobase.reservation.service.ReservationService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController

@@ -14,9 +14,6 @@ import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.ReservationRepository;
 import zerobase.reservation.repository.StoreRepository;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 import static zerobase.reservation.dto.ReservationDto.toReservationEntity;
 import static zerobase.reservation.type.ReservationStatus.CANCELED;
 import static zerobase.reservation.type.ReservationStatus.CONFIRMED;

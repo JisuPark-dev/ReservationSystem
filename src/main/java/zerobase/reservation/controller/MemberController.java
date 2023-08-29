@@ -1,5 +1,6 @@
 package zerobase.reservation.controller;
 
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,9 +21,13 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/member")
-    public ResponseEntity<Member> create(@RequestBody MemberDto memberDto) {
+    @ApiOperation(value="member생성", notes="member생성")
+    public ResponseEntity<MemberDto> create(@RequestBody MemberDto memberDto) {
         Member member = memberService.join(memberDto);
-        return ResponseEntity.ok(member);
+        memberDto = new MemberDto().builder()
+                .username(member.getUsername())
+                .build();
+        return ResponseEntity.ok(memberDto);
     }
 
     @PostMapping("/login")

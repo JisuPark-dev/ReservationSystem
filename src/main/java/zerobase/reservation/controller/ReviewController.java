@@ -5,13 +5,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import zerobase.reservation.dto.ReservationDto;
-import zerobase.reservation.dto.Result;
 import zerobase.reservation.dto.ReviewDto;
 import zerobase.reservation.service.ReviewService;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -34,15 +31,10 @@ public class ReviewController {
     ) {
         Page<ReviewDto> reservationPage = reviewService.findAllByMemberId(id, pageable);
 
-        Map<String, Object> response = new HashMap<>();
-        response.put("data", reservationPage.getContent());
-        response.put("currentPage", reservationPage.getNumber());
-        response.put("totalItems", reservationPage.getTotalElements());
-        response.put("totalPages", reservationPage.getTotalPages());
+        Map<String, Object> response = getPageableResponse(reservationPage);
 
         return ResponseEntity.ok(response);
     }
-
 
     @GetMapping("/reviews/store/{storeId}")
     public ResponseEntity<Map<String, Object>> findAllByStoreId(
@@ -50,13 +42,18 @@ public class ReviewController {
             Pageable pageable
     ) {
         Page<ReviewDto> reviewDtosByMemberId = reviewService.findAllByStoreId(id, pageable);
-        Map<String, Object> response = new HashMap<>();
-        response.put("data", reviewDtosByMemberId.getContent());
-        response.put("currentPage", reviewDtosByMemberId.getNumber());
-        response.put("totalItems", reviewDtosByMemberId.getTotalElements());
-        response.put("totalPages", reviewDtosByMemberId.getTotalPages());
+        Map<String, Object> response = getPageableResponse(reviewDtosByMemberId);
 
         return ResponseEntity.ok(response);
+    }
+
+    private Map<String, Object> getPageableResponse(Page<ReviewDto> reservationPage) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("data", reservationPage.getContent());
+        response.put("currentPage", reservationPage.getNumber());
+        response.put("totalItems", reservationPage.getTotalElements());
+        response.put("totalPages", reservationPage.getTotalPages());
+        return response;
     }
 
     @PutMapping("/review/{reviewId}")

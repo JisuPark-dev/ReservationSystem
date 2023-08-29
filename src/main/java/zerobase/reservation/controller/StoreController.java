@@ -12,9 +12,7 @@ import zerobase.reservation.repository.StoreRepository;
 import zerobase.reservation.service.StoreService;
 
 import javax.transaction.Transactional;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController

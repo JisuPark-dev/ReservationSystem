@@ -11,6 +11,7 @@ import zerobase.reservation.dao.Reservation;
 import zerobase.reservation.dao.Review;
 import zerobase.reservation.dao.Store;
 import zerobase.reservation.dto.ReviewDto;
+import zerobase.reservation.exception.ReservationException;
 import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.ReservationRepository;
 import zerobase.reservation.repository.ReviewRepository;
@@ -19,11 +20,11 @@ import zerobase.reservation.type.ReservationStatus;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static zerobase.reservation.dto.ReviewDto.toReviewEntity;
+import static zerobase.reservation.type.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -36,20 +37,19 @@ public class ReviewService {
 
     public ReviewDto join(ReviewDto reviewDto) {
         Member member = memberRepository.findById(reviewDto.getMemberId())
-                .orElseThrow(() -> new NoSuchElementException("No Member found with ID: " + reviewDto.getMemberId()));
+                .orElseThrow(() -> new ReservationException(MEMBER_NOT_FOUND));
 
         Store store = storeRepository.findById(reviewDto.getStoreId())
-                .orElseThrow(() -> new NoSuchElementException("No Store found with ID: " + reviewDto.getStoreId()));
+                .orElseThrow(() -> new ReservationException(STORE_NOT_FOUND));
 
         Reservation reservation = reservationRepository.findById(reviewDto.getReservationId())
-                .orElseThrow(() -> new NoSuchElementException("No Reservation found with ID: " + reviewDto.getReservationId()));
+                .orElseThrow(() -> new ReservationException(RESERVATION_NOT_FOUND));
 
-        // Check if reservation already has a review
         if(reservation.getReview() != null) {
-            throw new IllegalStateException("This reservation already has a review.");
+            throw new ReservationException(ALREADY_EXIST_REVIEW);
         }
         if(reservation.getReservationStatus()!= ReservationStatus.CONFIRMED){
-            throw new IllegalStateException("예약이 확정되고 나서 사용 가능합니다.");
+            throw new ReservationException(RESERVATION_NOT_CONFIRMED);
         }
 
         Review review = reviewRepository.save(toReviewEntity(member, store, reservation, reviewDto));
