@@ -1,4 +1,4 @@
-package zerobase.reservation.member.service;
+package zerobase.reservation.service;
 
 
 import org.assertj.core.api.Assertions;
