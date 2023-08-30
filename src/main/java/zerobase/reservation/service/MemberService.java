@@ -5,11 +5,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.dto.MemberDto;
+import zerobase.reservation.exception.ReservationException;
 import zerobase.reservation.repository.MemberRepository;
 
 import java.util.Optional;
 
 import static zerobase.reservation.dto.MemberDto.toMemberEntity;
+import static zerobase.reservation.type.ErrorCode.*;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +20,18 @@ public class MemberService {
     private final MemberRepository memberRepository;
 
     public Member join(MemberDto memberDto) {
+        if(memberRepository.existsByUsername(memberDto.getUsername())){
+            throw new ReservationException(ALREADY_EXIST_MEMBERNAME);
+        }
+        // Check if username contains only English letters (both uppercase and lowercase)
+        if (!memberDto.getUsername().matches("^[a-zA-Z]+$")) {
+            throw new ReservationException(USERNAME_NOT_INVALID_TYPE);
+        }
+
+        // Check if password contains only English letters (both uppercase and lowercase)
+        if (!memberDto.getPassword().matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\",.<>\\/?]+$")) {
+            throw new ReservationException(PASSWORD_NOT_INVALID_TYPE);
+        }
         return memberRepository.save(toMemberEntity(memberDto));
     }
 

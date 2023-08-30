@@ -3,6 +3,7 @@ package zerobase.reservation.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import zerobase.reservation.dao.Member;
@@ -10,11 +11,16 @@ import zerobase.reservation.dao.Reservation;
 import zerobase.reservation.dao.Review;
 import zerobase.reservation.dao.Store;
 import zerobase.reservation.dto.ReservationDto;
+import zerobase.reservation.exception.ReservationException;
 import zerobase.reservation.repository.MemberRepository;
 import zerobase.reservation.repository.ReservationRepository;
 import zerobase.reservation.repository.StoreRepository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 import static zerobase.reservation.dto.ReservationDto.toReservationEntity;
+import static zerobase.reservation.type.ErrorCode.*;
 import static zerobase.reservation.type.ReservationStatus.CANCELED;
 import static zerobase.reservation.type.ReservationStatus.CONFIRMED;
 
@@ -27,6 +33,18 @@ public class ReservationService {
     private final StoreRepository storeRepository;
 
     private static Review review;
+
+    @Scheduled(fixedRate = 60000)  // 매 1분마다 실행
+    public void checkForExpiredReservations() {
+        LocalDateTime currentTime = LocalDateTime.now();
+
+        List<Reservation> expiredReservations = reservationRepository.findByTimeBeforeAndReservationStatusIsNot(currentTime, CANCELED);
+        for (Reservation reservation : expiredReservations) {
+            reservation.setReservationStatus(CANCELED);
+            reservationRepository.save(reservation);
+        }
+    }
+
     public ReservationDto join(ReservationDto reservationDto) {
         Member member = memberRepository.findById(reservationDto.getMemberId()).get();
         Store store = storeRepository.findById(reservationDto.getStoreId()).get();
@@ -50,11 +68,26 @@ public class ReservationService {
     }
 
     public ReservationDto confirmReservation(Long reservationId) {
-        Reservation reservation = reservationRepository.findById(reservationId).get();
+        Reservation reservation = reservationRepository.findById(reservationId)
+                .orElseThrow(() -> new ReservationException(RESERVATION_NOT_FOUND));
+
+        LocalDateTime reservationTime = reservation.getTime();
+        LocalDateTime currentTime = LocalDateTime.now();
+        LocalDateTime limitBefore = reservationTime.minusMinutes(10);
+
+        if (currentTime.isBefore(limitBefore)) {
+            throw new ReservationException(TOO_EARLY_FOR_CONFIRMATION);
+        }
+
+        if (currentTime.isAfter(reservationTime)) {
+            reservation.setReservationStatus(CANCELED);
+            throw new ReservationException(TOO_LATE_FOR_CONFIRMATION);
+        }
+
         reservation.setReservationStatus(CONFIRMED);
-        //TODO : 예약시간 10분 안에 들어온 요청인지 확인 필요.
         return reservationToDto(reservation);
     }
+
 
     public ReservationDto cancelReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId).get();
