@@ -1,9 +1,6 @@
 package zerobase.reservation.dao;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import zerobase.reservation.type.MemberStatus;
 
 import javax.persistence.*;
@@ -13,7 +10,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Getter @Setter
 @Builder
 public class Member {
     @Id @GeneratedValue

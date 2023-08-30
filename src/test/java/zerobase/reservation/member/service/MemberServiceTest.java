@@ -15,8 +15,7 @@ import zerobase.reservation.service.MemberService;
 import zerobase.reservation.type.MemberStatus;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class MemberServiceTest {
@@ -27,7 +26,7 @@ class MemberServiceTest {
     private MemberService memberService;
 
     @Test
-    void createMember(){
+    void joinMemberTest(){
         //given
         MemberDto memberDto = new MemberDto();
         memberDto.setUsername("member1");
@@ -47,7 +46,7 @@ class MemberServiceTest {
         Member savedMember = memberService.join(memberDto);
 
         //then
-        verify()
+        verify(memberRepository, times(1)).save(captor.capture());
 
         Assertions.assertThat(savedMember.getUsername()).isEqualTo(memberDto.getUsername());
         Assertions.assertThat(savedMember.getPassword()).isEqualTo(memberDto.getPassword());
