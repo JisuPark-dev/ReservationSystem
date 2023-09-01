@@ -11,7 +11,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import zerobase.reservation.dao.Member;
 import zerobase.reservation.dto.MemberDto;
 import zerobase.reservation.repository.MemberRepository;
-import zerobase.reservation.service.MemberService;
 import zerobase.reservation.type.MemberStatus;
 
 import static org.mockito.ArgumentMatchers.any;

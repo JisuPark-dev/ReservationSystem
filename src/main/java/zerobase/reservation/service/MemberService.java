@@ -32,6 +32,7 @@ public class MemberService {
         if (!memberDto.getPassword().matches("^[a-zA-Z0-9!@#$%^&*()_+\\-=\\[\\]{};':\",.<>\\/?]+$")) {
             throw new ReservationException(PASSWORD_NOT_INVALID_TYPE);
         }
+
         return memberRepository.save(toMemberEntity(memberDto));
     }
 

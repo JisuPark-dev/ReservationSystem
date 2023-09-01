@@ -34,7 +34,7 @@ public class ReservationService {
 
     private static Review review;
 
-    @Scheduled(fixedRate = 60000)  // 매 1분마다 실행
+    @Scheduled(fixedRate = 60000)
     public void checkForExpiredReservations() {
         LocalDateTime currentTime = LocalDateTime.now();
 
@@ -92,7 +92,6 @@ public class ReservationService {
     public ReservationDto cancelReservation(Long reservationId) {
         Reservation reservation = reservationRepository.findById(reservationId).get();
         reservation.setReservationStatus(CANCELED);
-        //TODO : 시간안에 확정 못할시에도 취소되도록 해야함.
         return reservationToDto(reservation);
     }
 
